@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Smart Tourism</string>
+    <!--命名设置-->
+    <string name="app_name">东湖智慧旅游</string>
 </resources>
