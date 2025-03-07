@@ -1,4 +1,6 @@
 package com.example.smarttourism.activity;
 
-public class UserMainActivity {
+import android.app.Activity;
+
+public class UserMainActivity extends Activity {
 }

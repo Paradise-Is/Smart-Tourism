@@ -3,4 +3,8 @@
     <!--常用色彩设置-->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_red">#5E3A3E</color>
+    <color name="dark_blue">#2F2945</color>
+    <color name="grey">#BBC0C4</color>
+    <color name="purple">#6750A4</color>
 </resources>
