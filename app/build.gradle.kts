@@ -14,6 +14,19 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters.addAll(arrayOf("armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+        }
+    }
+
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("libs")
+        }
+        getByName("debug").setRoot("build-types/debug")
+        getByName("release").setRoot("build-types/release")
     }
 
     buildTypes {
@@ -29,10 +42,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

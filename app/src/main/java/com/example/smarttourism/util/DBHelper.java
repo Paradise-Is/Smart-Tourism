@@ -15,18 +15,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //创建用户信息表
     private static final String CREATE_User = "create table if not exists User("
-            +"username text primary key,"
-            +"password text,"
-            +"email text,"
-            +"phone text,"
-            +"name text,"
-            +"birthday text,"
-            +"gender text)";
+            + "username text primary key,"
+            + "password text,"
+            + "email text,"
+            + "phone text,"
+            + "name text,"
+            + "birthday text,"
+            + "gender text)";
 
     //创建管理员信息表
     private static final String CREATE_Admin = "create table if not exists Admin("
-            +"username text primary key,"
-            +"password text)";
+            + "username text primary key,"
+            + "password text)";
 
     //构造函数，创建数据库
     public DBHelper(Context context) {
@@ -40,7 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return instance;
     }
-    public SQLiteDatabase getDatabase(){
+
+    public SQLiteDatabase getDatabase() {
         return database;
     }
 
