@@ -1,7 +1,9 @@
 package com.example.smarttourism.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.smarttourism.R;
+import com.example.smarttourism.util.DBHelper;
 
 public class LoginActivity extends Activity {
     private EditText usernameText;
@@ -24,6 +27,7 @@ public class LoginActivity extends Activity {
     private ImageView ifPwdShow;
     //输入框密码是否是隐藏，默认为true
     private boolean isHide = false;
+    private DBHelper dbHelper;
 
     //App启动执行
     @Override
@@ -38,6 +42,9 @@ public class LoginActivity extends Activity {
         adminLoginBt=(TextView)this.findViewById(R.id.adminLoginBt);
         registerBt=(TextView)this.findViewById(R.id.registerBt);
         forgetBt=(TextView)this.findViewById(R.id.forgetBt);
+        //实现数据库功能
+        dbHelper = DBHelper.getInstance(this);
+        dbHelper.open();
         //实现密码显示与隐藏
         ifPwdShow=findViewById(R.id.hide_or_display);
         ifPwdShow.setImageResource(R.mipmap.password_hide);
@@ -71,7 +78,43 @@ public class LoginActivity extends Activity {
     private class LoginBtListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-
+            String username=usernameText.getText().toString();
+            String password=passwordText.getText().toString();
+            //实现登录逻辑
+            if(username.equals("")){
+                Toast.makeText(LoginActivity.this, "用户名输入不能为空", Toast.LENGTH_SHORT).show();
+            }
+            else if(password.equals("")){
+                Toast.makeText(LoginActivity.this, "密码输入不能为空", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                String selection = "username=?";
+                String[] selectionArgs = {username};
+                //查询对应项
+                Cursor cursor = dbHelper.getDatabase().query("User", null, selection, selectionArgs, null, null, null);
+                //游标移动进行校验
+                if(cursor.moveToNext()) {
+                    //从数据库获取密码进行校验
+                    @SuppressLint("Range")
+                    String dbPassword = cursor.getString(cursor.getColumnIndex("password"));
+                    //关闭游标
+                    cursor.close();
+                    if(password.equals(dbPassword)) {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        //携带用户名数据跳转
+                        Intent intent = new Intent();
+                        intent.putExtra("username",username);
+                        intent.setClass(LoginActivity.this,UserMainActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 
