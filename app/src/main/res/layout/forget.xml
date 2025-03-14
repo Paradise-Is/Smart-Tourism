@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/forget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.ForgetActivity">
+    <!--设置背景图片-->
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_three"/>
+    <!--返回用户登录界面-->
+    <LinearLayout
+        android:id="@+id/back_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:id="@+id/backBt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="left|center"
+            android:paddingBottom="5dp"
+            android:text="@string/back"
+            android:textColor="@color/dark_red"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <!--邮箱输入框-->
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="@string/email_in"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
+    <!--确认按钮-->
+    <Button
+        android:id="@+id/forgetBt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/radius_border_purple"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>
