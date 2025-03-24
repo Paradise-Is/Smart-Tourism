@@ -21,6 +21,16 @@ android {
         }
     }
 
+    //根据不同的cpu架构，在app/build/outputs/apk/下生成对应的apk
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("x86", "armeabi-v7a", "x86_64")
+            isUniversalApk = true
+        }
+    }
+
     sourceSets {
         getByName("main") {
             jniLibs.srcDirs("libs")
@@ -50,6 +60,8 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("androidx.activity:activity:1.2.0")
+    implementation("androidx.fragment:fragment:1.3.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

@@ -28,6 +28,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".util.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -101,7 +102,7 @@
         <!--高德定位服务-->
         <service android:name="com.amap.api.location.APSService" />
 
-        <!--高德的Key-->
+        <!--高德的访问Key-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="6389bd48578844361e3af77ea525b6db" />
