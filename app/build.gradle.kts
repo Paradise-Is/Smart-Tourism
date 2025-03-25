@@ -16,6 +16,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
+            //abiFilters.add("armeabi-v7a")
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters.addAll(arrayOf("armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
         }

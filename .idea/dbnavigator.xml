@@ -6,7 +6,7 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -24,13 +24,16 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="bbe35c10-17d6-4286-a9ea-dd3e4a03bc66" object-ref="schemas/main/tables/User" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="bbe35c10-17d6-4286-a9ea-dd3e4a03bc66" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="bbe35c10-17d6-4286-a9ea-dd3e4a03bc66" dataset="main.User" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="bbe35c10-17d6-4286-a9ea-dd3e4a03bc66" dataset="main.android_metadata" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -66,7 +69,7 @@
           <tns-folder value="" />
           <tns-profile value="" />
           <files>
-            <file path="$USER_HOME$/AppData/Local/Google/AndroidStudio2023.2/device-explorer/Pixel 8 API 29/_/data/data/com.example.smarttourism/databases/SmartTourism.db" schema="main" />
+            <file path="C:\Users\19556\AppData\Local\Google\AndroidStudio2023.2\device-explorer\Pixel 8 API 29\_\data\data\com.example.smarttourism\databases\SmartTourism.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

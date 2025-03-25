@@ -19,18 +19,24 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.LocationSource;
 import com.example.smarttourism.R;
 import com.example.smarttourism.databinding.UserMainBinding;
 
-public class UserMainActivity extends AppCompatActivity implements AMapLocationListener {
+public class UserMainActivity extends AppCompatActivity implements AMapLocationListener, LocationSource {
     private static final String TAG = "UserMainActivity";
+    private UserMainBinding binding;
+    //请求权限意图
+    private ActivityResultLauncher<String> requestPermission;
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
-    private UserMainBinding binding;
-    //请求权限意图
-    private ActivityResultLauncher<String> requestPermission;
+    // 声明地图控制器
+    private AMap aMap = null;
+    // 声明地图定位监听
+    private LocationSource.OnLocationChangedListener mListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +58,12 @@ public class UserMainActivity extends AppCompatActivity implements AMapLocationL
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //获取组件
         //初始化定位
         initLocation();
         //绑定生命周期onCreate
         binding.mapView.onCreate(savedInstanceState);
-
-
+        //初始化地图
+        initMap();
     }
 
     //初始化位置信息
@@ -82,6 +87,17 @@ public class UserMainActivity extends AppCompatActivity implements AMapLocationL
             mLocationClient.setLocationOption(mLocationOption);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //初始化地图
+    private void initMap() {
+        if (aMap == null) {
+            aMap = binding.mapView.getMap();
+            // 设置定位监听
+            aMap.setLocationSource(this);
+            // 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+            aMap.setMyLocationEnabled(true);
         }
     }
 
@@ -131,7 +147,7 @@ public class UserMainActivity extends AppCompatActivity implements AMapLocationL
         binding.mapView.onDestroy();
     }
 
-    //显示权限获取结果
+    //显示提示消息
     private void showMsg(CharSequence msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
@@ -154,7 +170,7 @@ public class UserMainActivity extends AppCompatActivity implements AMapLocationL
 //            aMapLocation.getCountry();//国家信息
 //            aMapLocation.getProvince();//省信息
 //            aMapLocation.getCity();//城市信息
-            String result = aMapLocation.getDistrict();//城区信息
+//            aMapLocation.getDistrict();//城区信息
 //            aMapLocation.getStreet();//街道信息
 //            aMapLocation.getStreetNum();//街道门牌号信息
 //            aMapLocation.getCityCode();//城市编码
@@ -165,6 +181,10 @@ public class UserMainActivity extends AppCompatActivity implements AMapLocationL
 //            aMapLocation.getGpsAccuracyStatus();//获取GPS的当前状态
             // 停止定位
             stopLocation();
+            // 显示地图定位结果
+            if (mListener != null) {
+                mListener.onLocationChanged(aMapLocation);
+            }
         } else {
             // 定位失败
             showMsg("定位失败，错误：" + aMapLocation.getErrorInfo());
@@ -172,5 +192,25 @@ public class UserMainActivity extends AppCompatActivity implements AMapLocationL
                     + aMapLocation.getErrorCode() + ", errInfo:"
                     + aMapLocation.getErrorInfo());
         }
+    }
+
+    //激活定位
+    @Override
+    public void activate(OnLocationChangedListener onLocationChangedListener) {
+        if (mListener == null) {
+            mListener = onLocationChangedListener;
+        }
+        startLocation();
+    }
+
+    //禁用定位
+    @Override
+    public void deactivate() {
+        mListener = null;
+        if (mLocationClient != null) {
+            mLocationClient.stopLocation();
+            mLocationClient.onDestroy();
+        }
+        mLocationClient = null;
     }
 }
