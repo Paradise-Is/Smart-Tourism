@@ -1,7 +1,9 @@
 package com.example.smarttourism.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,12 +26,17 @@ public class AdminMainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     //侧边栏中的菜单视图
     private NavigationView navigationView;
+    //管理员用户名
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //构建管理员主页界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_main);
+        //获取管理员用户名
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
         //获取组件
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -39,8 +46,8 @@ public class AdminMainActivity extends AppCompatActivity {
             AdminHomeFragment defaultFragment = new AdminHomeFragment();
             //构建传递给片段的参数
             Bundle args = new Bundle();
-            //可以通过 getArguments() 来获取这个传递过来的文本数据。
-            args.putString("text", navigationView.getMenu().findItem(R.id.nav_home).getTitle().toString());
+            //将用户名作为参数传递过去，可以通过getArguments()来获取这个传递过来的文本数据
+            args.putString("username", username);
             //将参数设置给片段
             defaultFragment.setArguments(args);
             //加载默认片段到容器中
@@ -66,36 +73,34 @@ public class AdminMainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.nav_home:
                     selectedFragment = new AdminHomeFragment();
-                    args.putString("text", item.getTitle().toString());
                     break;
                 case R.id.nav_analysis:
                     selectedFragment = new AnalysisFragment();
-                    args.putString("text", item.getTitle().toString());
                     break;
                 case R.id.nav_emergency:
                     selectedFragment = new EmergencyFragment();
-                    args.putString("text", item.getTitle().toString());
                     break;
                 case R.id.nav_docent:
                     selectedFragment = new DocentFragment();
-                    args.putString("text", item.getTitle().toString());
                     break;
                 case R.id.nav_complaint:
                     selectedFragment = new ComplaintFragment();
-                    args.putString("text", item.getTitle().toString());
                     break;
                 case R.id.nav_coach:
                     selectedFragment = new CoachFragment();
-                    args.putString("text", item.getTitle().toString());
                     break;
                 case R.id.nav_password:
                     selectedFragment = new PasswordFragment();
-                    args.putString("text", item.getTitle().toString());
                     break;
                 case R.id.nav_back:
+                    Toast.makeText(AdminMainActivity.this, "已退出管理员系统", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(AdminMainActivity.this, AdminLoginActivity.class);
+                    startActivity(intent);
                     break;
             }
             if (selectedFragment != null) {
+                args.putString("username", username);
                 selectedFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_content, selectedFragment)

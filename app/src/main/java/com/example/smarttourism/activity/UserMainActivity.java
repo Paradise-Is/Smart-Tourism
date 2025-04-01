@@ -1,5 +1,6 @@
 package com.example.smarttourism.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -18,12 +19,17 @@ import com.google.android.material.navigation.NavigationBarView;
 public class UserMainActivity extends AppCompatActivity {
     //底边栏的选项卡视图
     private BottomNavigationView bottomNavigationView;
+    //用户用户名
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //构建用户主页界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_main);
+        //获取用户用户名
+        Intent intent=getIntent();
+        username = intent.getStringExtra("username");
         //获取组件
         bottomNavigationView = findViewById(R.id.tab_menu_bar);
         //默认加载首页
@@ -32,8 +38,8 @@ public class UserMainActivity extends AppCompatActivity {
             UserHomeFragment defaultFragment = new UserHomeFragment();
             //构建传递给片段的参数
             Bundle args = new Bundle();
-            //可以通过 getArguments() 来获取这个传递过来的文本数据。
-            args.putString("text", bottomNavigationView.getMenu().findItem(R.id.tab_home).getTitle().toString());
+            //将用户名作为参数传递过去，可以通过getArguments()来获取这个传递过来的文本数据
+            args.putString("username", username);
             //将参数设置给片段
             defaultFragment.setArguments(args);
             //加载默认片段到容器中
@@ -52,6 +58,7 @@ public class UserMainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
+            Bundle args = new Bundle();
             switch (item.getItemId()) {
                 case R.id.tab_home:
                     selectedFragment = new UserHomeFragment();
@@ -67,6 +74,8 @@ public class UserMainActivity extends AppCompatActivity {
                     break;
             }
             if (selectedFragment != null) {
+                args.putString("username", username);
+                selectedFragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_menu, selectedFragment)
                         .commit();
