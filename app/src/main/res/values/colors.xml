@@ -9,4 +9,5 @@
     <color name="grey">#BBC0C4</color>
     <color name="purple">#6750A4</color>
     <color name="light_purple">#F0DFFF</color>
+    <color name="transparent">#FFFFFFFF</color>
 </resources>

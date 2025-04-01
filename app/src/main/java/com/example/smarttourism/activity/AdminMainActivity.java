@@ -2,10 +2,8 @@ package com.example.smarttourism.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -65,7 +63,7 @@ public class AdminMainActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
             Bundle args = new Bundle();
             //处理不同选项点击事件
-            switch(item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.nav_home:
                     selectedFragment = new AdminHomeFragment();
                     args.putString("text", item.getTitle().toString());

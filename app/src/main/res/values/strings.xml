@@ -16,6 +16,10 @@
     <string name="cancel">取消</string>
     <string name="admin_word">登录管理员系统</string>
     <string name="back">返回</string>
+    <string name="tab_home">首页</string>
+    <string name="tab_guide">攻略</string>
+    <string name="tab_surroundings">周边</string>
+    <string name="tab_mine">我的</string>
     <string name="nav_home">主页</string>
     <string name="home_welcome">欢迎进入东湖智慧旅游管理员系统</string>
     <string name="nav_analysis">客情分析</string>
