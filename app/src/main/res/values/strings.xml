@@ -1,9 +1,9 @@
 <resources>
     <!--命名设置-->
-    <string name="app_name">东湖智慧旅游</string>
+    <string name="app_name">东湖景区智慧旅游</string>
     <string name="admin_login">管理员登录</string>
     <string name="hi">Hi!</string>
-    <string name="welcome">欢迎使用东湖智慧旅游</string>
+    <string name="welcome">欢迎使用东湖景区智慧旅游</string>
     <string name="username_in">请输入用户名</string>
     <string name="email_in">请输入邮箱</string>
     <string name="password_in">请输入密码</string>
@@ -16,4 +16,14 @@
     <string name="cancel">取消</string>
     <string name="admin_word">登录管理员系统</string>
     <string name="back">返回</string>
+    <string name="nav_home">主页</string>
+    <string name="home_welcome">欢迎进入东湖智慧旅游管理员系统</string>
+    <string name="nav_analysis">客情分析</string>
+    <string name="nav_emergency">应急指挥管理</string>
+    <string name="nav_docent">讲解员管理</string>
+    <string name="nav_complaint">投诉管理</string>
+    <string name="nav_coach">游览车管理</string>
+    <string name="nav_bottom">账号设置与管理</string>
+    <string name="nav_password">修改密码</string>
+    <string name="nav_back">退出系统</string>
 </resources>
