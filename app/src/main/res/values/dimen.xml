@@ -2,4 +2,5 @@
     <!--组件尺寸设置-->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="menu_margin">180dp</dimen>
 </resources>

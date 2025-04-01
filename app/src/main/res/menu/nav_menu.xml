@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--侧边菜单栏内容布局-->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/nav_home"
+            android:title="@string/nav_home" />
+        <item
+            android:id="@+id/nav_analysis"
+            android:icon="@mipmap/nav_analysis"
+            android:title="@string/nav_analysis" />
+        <item
+            android:id="@+id/nav_emergency"
+            android:icon="@mipmap/nav_emergency"
+            android:title="@string/nav_emergency" />
+        <item
+            android:id="@+id/nav_docent"
+            android:icon="@mipmap/nav_docent"
+            android:title="@string/nav_docent" />
+        <item
+            android:id="@+id/nav_complaint"
+            android:icon="@mipmap/nav_complaint"
+            android:title="@string/nav_complaint" />
+        <item
+            android:id="@+id/nav_coach"
+            android:icon="@mipmap/nav_coach"
+            android:title="@string/nav_coach" />
+    </group>
+    <item android:title="@string/nav_bottom">
+        <menu>
+            <item
+                android:id="@+id/nav_password"
+                android:icon="@mipmap/nav_password"
+                android:title="@string/nav_password" />
+            <item
+                android:id="@+id/nav_back"
+                android:icon="@mipmap/nav_back"
+                android:title="@string/nav_back"/>
+        </menu>
+    </item>
+</menu>
