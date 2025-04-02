@@ -57,8 +57,8 @@
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_below="@+id/tv_nickname"
+                    android:layout_marginTop="20dp"
                     android:text="@string/mine_email"
                     android:textColor="@color/brown"
                     android:textSize="20sp"
@@ -179,7 +179,7 @@
             android:layout_height="2px"
             android:layout_below="@+id/passwordBt"
             android:background="@color/grey" />
-        <!--注销账号按钮-->
+        <!--账号注销按钮-->
         <LinearLayout
             android:id="@+id/logoutBt"
             android:layout_width="match_parent"

@@ -139,6 +139,7 @@ public class RegisterActivity extends Activity {
                 values.put("username", username);
                 values.put("password", password);
                 values.put("email", email);
+                values.put("nickname","user_"+username);
                 //查询用户名是否已经被注册过
                 long message = dbHelper.getDatabase().insert("User", null, values);
                 if (message != -1) {

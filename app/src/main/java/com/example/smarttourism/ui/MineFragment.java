@@ -1,6 +1,8 @@
 package com.example.smarttourism.ui;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.smarttourism.R;
 import com.example.smarttourism.activity.LoginActivity;
+import com.example.smarttourism.activity.MinePasswordActivity;
 import com.example.smarttourism.util.DBHelper;
 
 public class MineFragment extends Fragment {
@@ -97,12 +100,30 @@ public class MineFragment extends Fragment {
     private class PasswordBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            Intent intent= new Intent(getActivity(), MinePasswordActivity.class);
+            intent.putExtra("username",username);
+            startActivity(intent);
         }
     }
 
     private class LogoutBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            //弹出弹窗，确认是否注销
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("是否确认要注销账号");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //从表User中删除指定用户的记录
+                    dbHelper.getDatabase().delete("User", "username = ? ", new String[]{username});
+                    Toast.makeText(getActivity(), "用户已注销", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+            builder.setNeutralButton("取消", null);
+            builder.show();
         }
     }
 
