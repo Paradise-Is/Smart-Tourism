@@ -18,8 +18,9 @@ public class DBHelper extends SQLiteOpenHelper {
             + "username text primary key,"
             + "password text,"
             + "email text,"
+            + "headshot text,"
             + "phone text,"
-            + "name text,"
+            + "nickname text,"
             + "birthday text,"
             + "gender text)";
 

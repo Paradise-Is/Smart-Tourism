@@ -3,10 +3,13 @@
     <!--常用色彩设置-->
     <color name="black">#FF000000</color>
     <color name="light_black">#2C2C2C</color>
+    <color name="brown">#6F6F6F</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="silver">#C9C9C9</color>
     <color name="dark_red">#5E3A3E</color>
     <color name="dark_blue">#2F2945</color>
     <color name="grey">#BBC0C4</color>
+    <color name="light_grey">#F5F5F5</color>
     <color name="purple">#6750A4</color>
     <color name="light_purple">#F0DFFF</color>
     <color name="transparent">#FFFFFFFF</color>

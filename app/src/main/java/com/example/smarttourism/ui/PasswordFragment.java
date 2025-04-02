@@ -41,7 +41,6 @@ public class PasswordFragment extends Fragment {
         //获取从Activity传来的数据
         Bundle args = getArguments();
         username = args.getString("username");
-        Toast.makeText(getActivity(), "您的用户名为"+username, Toast.LENGTH_SHORT).show();
         //实现按钮点击响应
         editPasswordBt.setOnClickListener(new EditPasswordBtListener());
         return view;
@@ -53,11 +52,11 @@ public class PasswordFragment extends Fragment {
             String oldPassword = oldPasswordText.getText().toString();
             String newPassword = newPasswordText.getText().toString();
             String renewPassword = renewPasswordText.getText().toString();
-            if (oldPassword.equals("")) {
+            if (oldPassword.isEmpty()) {
                 Toast.makeText(getActivity(), "旧密码输入不能为空", Toast.LENGTH_SHORT).show();
-            } else if (newPassword.equals("")) {
+            } else if (newPassword.isEmpty()) {
                 Toast.makeText(getActivity(), "新密码输入不能为空", Toast.LENGTH_SHORT).show();
-            } else if (renewPassword.equals("")) {
+            } else if (renewPassword.isEmpty()) {
                 Toast.makeText(getActivity(), "再次确认密码输入不能为空", Toast.LENGTH_SHORT).show();
             } else if (!newPassword.equals(renewPassword)) {
                 Toast.makeText(getActivity(), "两次密码输入不一致", Toast.LENGTH_SHORT).show();

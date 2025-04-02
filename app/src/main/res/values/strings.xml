@@ -33,4 +33,10 @@
     <string name="nav_bottom">账号设置与管理</string>
     <string name="nav_password">修改密码</string>
     <string name="nav_back">退出系统</string>
+    <string name="mine_complain">景区投诉</string>
+    <string name="mine_alarm">一键报警</string>
+    <string name="mine_logout">用户注销</string>
+    <string name="mine_back">退出登录</string>
+    <string name="mine_nickname">昵称</string>
+    <string name="mine_email">邮箱</string>
 </resources>
