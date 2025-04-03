@@ -87,7 +87,7 @@ public class MinePasswordActivity extends Activity {
                         //修改密码
                         ContentValues values = new ContentValues();
                         values.put("password", newPassword);
-                        dbHelper.getDatabase().update("Admin", values, "username = ?", new String[]{username});
+                        dbHelper.getDatabase().update("User", values, "username = ?", new String[]{username});
                         Toast.makeText(MinePasswordActivity.this, "修改密码成功，请返回登录", Toast.LENGTH_SHORT).show();
                         //跳转回用户登录界面
                         Intent intent = new Intent(MinePasswordActivity.this, LoginActivity.class);

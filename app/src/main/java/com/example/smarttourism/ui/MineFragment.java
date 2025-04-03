@@ -19,6 +19,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.smarttourism.R;
 import com.example.smarttourism.activity.LoginActivity;
+import com.example.smarttourism.activity.MineComplainActivity;
+import com.example.smarttourism.activity.MineInfoActivity;
 import com.example.smarttourism.activity.MinePasswordActivity;
 import com.example.smarttourism.util.DBHelper;
 
@@ -61,10 +63,14 @@ public class MineFragment extends Fragment {
         //根据用户查询到对应项
         Cursor cursor = dbHelper.getDatabase().query("User", null, selection, selectionArgs, null, null, null);
         if (cursor.moveToNext()) {
-            //从数据库获取密码进行校验
+            //从数据库获取数据进行界面显示
             @SuppressLint("Range")
             String dbEmail = cursor.getString(cursor.getColumnIndex("email"));
-            tvNickname.setText(username);
+            @SuppressLint("Range")
+            String dbNickname = cursor.getString(cursor.getColumnIndex("nickname"));
+            @SuppressLint("Range")
+            String dbHeadshot = cursor.getString(cursor.getColumnIndex("headshot"));
+            tvNickname.setText(dbNickname);
             tvEmail.setText(dbEmail);
         } else {
             Toast.makeText(getActivity(), "系统出错了┭┮﹏┭┮", Toast.LENGTH_SHORT).show();
@@ -82,18 +88,35 @@ public class MineFragment extends Fragment {
     private class InfoBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            Intent intent= new Intent(getActivity(), MineInfoActivity.class);
+            intent.putExtra("username",username);
+            startActivity(intent);
         }
     }
 
     private class ComplainBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            Intent intent= new Intent(getActivity(), MineComplainActivity.class);
+            intent.putExtra("username",username);
+            startActivity(intent);
         }
     }
 
     private class AlarmBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            //弹出弹窗，确认是否报警
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("是否确认要报警");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), "报警成功", Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.setNeutralButton("取消", null);
+            builder.show();
         }
     }
 

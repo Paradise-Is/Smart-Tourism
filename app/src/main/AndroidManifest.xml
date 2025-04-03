@@ -105,6 +105,36 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MineInfoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmartTourism">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MineComplainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmartTourism">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MinePasswordActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmartTourism">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!--高德定位服务-->
         <service android:name="com.amap.api.location.APSService" />
