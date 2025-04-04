@@ -4,7 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,8 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +40,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class MineInfoActivity extends Activity {
     private static final int REQUEST_CAMERA_CODE = 1001;
@@ -112,37 +118,37 @@ public class MineInfoActivity extends Activity {
             @SuppressLint("Range")
             String dbNickname = cursor.getString(cursor.getColumnIndex("nickname"));
             //将昵称数据显示到界面中
-            if (dbNickname != null && !dbNickname.isEmpty()){
+            if (dbNickname != null && !dbNickname.isEmpty()) {
                 nicknameInfo.setText(dbNickname);
             }
             @SuppressLint("Range")
             String dbGender = cursor.getString(cursor.getColumnIndex("gender"));
             //将性别数据显示到界面中
-            if (dbGender != null && !dbGender.isEmpty()){
+            if (dbGender != null && !dbGender.isEmpty()) {
                 genderInfo.setText(dbGender);
             }
             @SuppressLint("Range")
             String dbIntroduction = cursor.getString(cursor.getColumnIndex("introduction"));
             //将简介数据显示到界面中
-            if (dbIntroduction != null && !dbIntroduction.isEmpty()){
+            if (dbIntroduction != null && !dbIntroduction.isEmpty()) {
                 introductionInfo.setText(dbIntroduction);
             }
             @SuppressLint("Range")
             String dbBirthday = cursor.getString(cursor.getColumnIndex("birthday"));
             //将生日数据显示到界面中
-            if (dbBirthday != null && !dbBirthday.isEmpty()){
+            if (dbBirthday != null && !dbBirthday.isEmpty()) {
                 birthdayInfo.setText(dbBirthday);
             }
             @SuppressLint("Range")
             String dbPhone = cursor.getString(cursor.getColumnIndex("phone"));
             //将电话数据显示到界面中
-            if (dbPhone != null && !dbPhone.isEmpty()){
+            if (dbPhone != null && !dbPhone.isEmpty()) {
                 phoneInfo.setText(dbPhone);
             }
             @SuppressLint("Range")
             String dbEmail = cursor.getString(cursor.getColumnIndex("email"));
             //将邮箱数据显示到界面中
-            if (dbEmail != null && !dbEmail.isEmpty()){
+            if (dbEmail != null && !dbEmail.isEmpty()) {
                 emailInfo.setText(dbEmail);
             }
         } else {
@@ -181,6 +187,7 @@ public class MineInfoActivity extends Activity {
                     headshot.setImageBitmap(circularBitmap);
                     //bitmap图片保存到本地
                     saveImage(circularBitmap);
+                    Toast.makeText(this, "头像修改成功", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "无法解析选取的图片", Toast.LENGTH_SHORT).show();
                 }
@@ -197,9 +204,9 @@ public class MineInfoActivity extends Activity {
             bitmap = BitmapUtils.circleBitmap(bitmap);
             //显示处理后的图片
             headshot.setImageBitmap(bitmap);
-            //bitmap图片上传到服务器
             //bitmap图片保存到本地
             saveImage(bitmap);
+            Toast.makeText(this, "头像修改成功", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -314,36 +321,195 @@ public class MineInfoActivity extends Activity {
     private class NicknameListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MineInfoActivity.this);
+            builder.setTitle("修改昵称");
+            //创建一个输入框
+            final EditText input = new EditText(MineInfoActivity.this);
+            input.setHint("请输入新昵称");
+            //显示当前昵称
+            input.setText(nicknameInfo.getText());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String newNickname = input.getText().toString().trim();
+                    if (!newNickname.isEmpty() && newNickname.length() <= 10) {
+                        // 更新数据库中的昵称
+                        dbHelper.updateUserNickname(username, newNickname);
+                        // 更新界面上的昵称
+                        nicknameInfo.setText(newNickname);
+                        Toast.makeText(MineInfoActivity.this, "昵称修改成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MineInfoActivity.this, "昵称必须小于等于10个字符且不能为空", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.setNeutralButton("取消", null);
+            //显示弹窗
+            builder.create().show();
         }
     }
 
     private class GenderListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MineInfoActivity.this);
+            builder.setTitle("选择性别");
+            //定义可选的性别选项
+            final String[] genders = {"男", "女"};
+            //设置单选列表，默认不选中(-1)
+            builder.setSingleChoiceItems(genders, -1, null);
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // 获取弹窗中ListView的选中项
+                    ListView lw = ((AlertDialog) dialog).getListView();
+                    int selectedPosition = lw.getCheckedItemPosition();
+                    if (selectedPosition != -1) {
+                        String selectedGender = genders[selectedPosition];
+                        // 更新数据库中用户性别
+                        dbHelper.updateUserGender(username, selectedGender);
+                        // 更新界面显示（假设有一个TextView显示性别）
+                        genderInfo.setText(selectedGender);
+                        Toast.makeText(MineInfoActivity.this, "性别修改成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MineInfoActivity.this, "请选择性别", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.setNeutralButton("取消", null);
+            builder.create().show();
         }
     }
 
     private class IntroductionListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MineInfoActivity.this);
+            builder.setTitle("修改简介");
+            //创建一个输入框
+            final EditText input = new EditText(MineInfoActivity.this);
+            input.setHint("请输入你的简介");
+            //显示当前简介
+            input.setText(introductionInfo.getText());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String newIntroduction = input.getText().toString().trim();
+                    if (!newIntroduction.isEmpty() && newIntroduction.length() <= 50) {
+                        // 更新数据库中的昵称
+                        dbHelper.updateUserIntroduction(username, newIntroduction);
+                        // 更新界面上的昵称
+                        introductionInfo.setText(newIntroduction);
+                        Toast.makeText(MineInfoActivity.this, "简介修改成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MineInfoActivity.this, "简介必须小于等于50个字符且不能为空", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.setNeutralButton("取消", null);
+            //显示弹窗
+            builder.create().show();
         }
     }
 
     private class BirthdayListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            //获取当前日期作为默认值
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            //创建 DatePickerDialog 对象
+            DatePickerDialog datePickerDialog = new DatePickerDialog(MineInfoActivity.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                    String birthday = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+                    birthdayInfo.setText(birthday);
+                    dbHelper.updateUserBirthday(username, birthday);
+                    Toast.makeText(MineInfoActivity.this, "生日修改成功", Toast.LENGTH_SHORT).show();
+                }
+            }, year, month, day);
+            //显示弹窗
+            datePickerDialog.show();
         }
     }
 
     private class PhoneListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MineInfoActivity.this);
+            builder.setTitle("修改电话");
+            //创建一个输入框
+            final EditText input = new EditText(MineInfoActivity.this);
+            input.setHint("请输入你的电话");
+            //显示当前昵称
+            input.setText(phoneInfo.getText());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String newPhone = input.getText().toString().trim();
+                    Pattern phonePattern = Pattern.compile("(13[0-9]|14[57]|15[012356789]|18[02356789])\\d{8}");
+                    if (!newPhone.isEmpty() && phonePattern.matcher(newPhone).matches()) {
+                        // 更新数据库中的昵称
+                        dbHelper.updateUserPhone(username, newPhone);
+                        // 更新界面上的昵称
+                        phoneInfo.setText(newPhone);
+                        Toast.makeText(MineInfoActivity.this, "电话修改成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MineInfoActivity.this, "电话不符合规范", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.setNeutralButton("取消", null);
+            //显示弹窗
+            builder.create().show();
         }
     }
 
     private class EmailListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MineInfoActivity.this);
+            builder.setTitle("修改邮箱");
+            //创建一个输入框
+            final EditText input = new EditText(MineInfoActivity.this);
+            input.setHint("请输入你的邮箱");
+            //显示当前昵称
+            input.setText(emailInfo.getText());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String newEmail = input.getText().toString().trim();
+                    Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+                    String selection = "email=?";
+                    String[] selectionArgs = {newEmail};
+                    //查询邮箱是否已经被注册过
+                    Cursor cursor = dbHelper.getDatabase().query("User", null, selection, selectionArgs, null, null, null);
+                    if (cursor.getCount() != 0) {
+                        Toast.makeText(MineInfoActivity.this, "该邮箱已被注册", Toast.LENGTH_SHORT).show();
+                    } else if (!newEmail.isEmpty() && emailPattern.matcher(newEmail).matches()) {
+                        // 更新数据库中的昵称
+                        dbHelper.updateUserEmail(username, newEmail);
+                        // 更新界面上的昵称
+                        emailInfo.setText(newEmail);
+                        Toast.makeText(MineInfoActivity.this, "邮箱修改成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MineInfoActivity.this, "邮箱不符合规范", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            builder.setNeutralButton("取消", null);
+            //显示弹窗
+            builder.create().show();
         }
     }
 }

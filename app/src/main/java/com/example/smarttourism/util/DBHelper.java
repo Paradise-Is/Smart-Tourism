@@ -55,12 +55,66 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("insert into Admin(username,password)values('admin','123456')");
     }
 
-    //更新指定用户的头像，并将路径到数据库中
+    //更新指定用户邮箱
+    public void updateUserEmail(String username, String newEmail) {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("email", newEmail);
+        database.update("User", values, "username = ?", new String[]{username});
+        database.close();
+    }
+
+    //更新指定用户头像并将图片路径保存到数据库中
     public void updateUserHeadshot(String username, String headshotPath) {
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("headshot", headshotPath);
         // 更新User表中 username 对应的记录
+        database.update("User", values, "username = ?", new String[]{username});
+        database.close();
+    }
+
+    //更新指定用户昵称
+    public void updateUserNickname(String username, String newNickname) {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("nickname", newNickname);
+        database.update("User", values, "username = ?", new String[]{username});
+        database.close();
+    }
+
+    //更新指定用户性别
+    public void updateUserGender(String username, String newGender) {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("gender", newGender);
+        database.update("User", values, "username = ?", new String[]{username});
+        database.close();
+    }
+
+    //更新指定用户电话
+    public void updateUserPhone(String username, String newPhone) {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("phone", newPhone);
+        database.update("User", values, "username = ?", new String[]{username});
+        database.close();
+    }
+
+    //更新指定用户简介
+    public void updateUserIntroduction(String username, String newIntroduction) {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("introduction", newIntroduction);
+        database.update("User", values, "username = ?", new String[]{username});
+        database.close();
+    }
+
+    //更新指定用户生日
+    public void updateUserBirthday(String username, String newBirthday) {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("birthday", newBirthday);
         database.update("User", values, "username = ?", new String[]{username});
         database.close();
     }

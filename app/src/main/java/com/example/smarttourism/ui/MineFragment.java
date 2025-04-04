@@ -61,6 +61,25 @@ public class MineFragment extends Fragment {
         //获取从Activity传来的数据
         Bundle args = getArguments();
         username = args.getString("username");
+        RefreshUserInfo();
+        //实现按钮点击响应
+        infoBt.setOnClickListener(new InfoBtListener());
+        complainBt.setOnClickListener(new ComplainBtListener());
+        alarmBt.setOnClickListener(new AlarmBtListener());
+        passwordBt.setOnClickListener(new PasswordBtListener());
+        logoutBt.setOnClickListener(new LogoutBtListener());
+        backSysBt.setOnClickListener(new BackSysBtListener());
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RefreshUserInfo();
+    }
+
+    //刷新用户信息
+    private void RefreshUserInfo() {
         //将用户名，头像及邮箱信息显示到界面上
         String selection = "username=?";
         String[] selectionArgs = {username};
@@ -94,14 +113,6 @@ public class MineFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "系统出错了┭┮﹏┭┮", Toast.LENGTH_SHORT).show();
         }
-        //实现按钮点击响应
-        infoBt.setOnClickListener(new InfoBtListener());
-        complainBt.setOnClickListener(new ComplainBtListener());
-        alarmBt.setOnClickListener(new AlarmBtListener());
-        passwordBt.setOnClickListener(new PasswordBtListener());
-        logoutBt.setOnClickListener(new LogoutBtListener());
-        backSysBt.setOnClickListener(new BackSysBtListener());
-        return view;
     }
 
     private class InfoBtListener implements View.OnClickListener {

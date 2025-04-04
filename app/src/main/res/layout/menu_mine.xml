@@ -59,6 +59,9 @@
                     android:layout_below="@+id/tv_nickname"
                     android:layout_marginTop="30dp"
                     android:text="@string/mine_email"
+                    android:maxLines="1"
+                    android:maxEms="15"
+                    android:ellipsize="end"
                     android:textColor="@color/brown"
                     android:textSize="18sp"
                     android:textStyle="bold" />
