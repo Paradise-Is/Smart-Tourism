@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,8 @@ import com.example.smarttourism.activity.MineComplainActivity;
 import com.example.smarttourism.activity.MineInfoActivity;
 import com.example.smarttourism.activity.MinePasswordActivity;
 import com.example.smarttourism.util.DBHelper;
+
+import java.io.File;
 
 public class MineFragment extends Fragment {
     //用户用户名
@@ -66,12 +70,27 @@ public class MineFragment extends Fragment {
             //从数据库获取数据进行界面显示
             @SuppressLint("Range")
             String dbEmail = cursor.getString(cursor.getColumnIndex("email"));
+            tvEmail.setText(dbEmail);
             @SuppressLint("Range")
             String dbNickname = cursor.getString(cursor.getColumnIndex("nickname"));
+            tvNickname.setText(dbNickname);
             @SuppressLint("Range")
             String dbHeadshot = cursor.getString(cursor.getColumnIndex("headshot"));
-            tvNickname.setText(dbNickname);
-            tvEmail.setText(dbEmail);
+            //将头像数据显示到界面中
+            if (dbHeadshot != null && !dbHeadshot.isEmpty()) {
+                File imgFile = new File(dbHeadshot);
+                if (imgFile.exists()) {
+                    //删除旧图片的缓存
+                    headshot.setImageDrawable(null);
+                    Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    headshot.setImageBitmap(bitmap);
+                } else {
+                    //数据库中无头像数据时显示默认头像
+                    headshot.setImageResource(R.mipmap.mine_headshot);
+                }
+            } else {
+                headshot.setImageResource(R.mipmap.mine_headshot);
+            }
         } else {
             Toast.makeText(getActivity(), "系统出错了┭┮﹏┭┮", Toast.LENGTH_SHORT).show();
         }

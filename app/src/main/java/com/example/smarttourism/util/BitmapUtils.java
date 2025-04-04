@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 
 public class BitmapUtils {
+    //实现圆形头像效果
     public static Bitmap circleBitmap(Bitmap source){
         //默认只对宽进行处理
         int width=source.getWidth();
@@ -21,7 +22,7 @@ public class BitmapUtils {
         canvas.drawBitmap(source,0,0,paint);
         return bitmap;
     }
-    //该方法用于图片压缩处理，width、height参数的类型必须是float
+    //用于图片压缩处理，调整图片尺寸，使其适应控件的宽高
     public static Bitmap zoom(Bitmap source,float width,float height){
         Matrix matrix=new Matrix();    //图片进行压缩处理
         matrix.postScale(width/source.getWidth(),height/source.getHeight());

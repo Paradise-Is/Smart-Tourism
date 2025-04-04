@@ -39,4 +39,12 @@
     <string name="mine_back">退出登录</string>
     <string name="mine_nickname">昵称</string>
     <string name="mine_email">邮箱</string>
+    <string name="info_title">个人信息</string>
+    <string name="info_headshot">点击更换头像</string>
+    <string name="info_nickname">昵称</string>
+    <string name="info_gender">性别</string>
+    <string name="info_introduction">简介</string>
+    <string name="info_birthday">生日</string>
+    <string name="info_phone">电话</string>
+    <string name="info_email">邮箱</string>
 </resources>

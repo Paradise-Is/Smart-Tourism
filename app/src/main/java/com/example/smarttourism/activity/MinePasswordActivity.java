@@ -39,17 +39,17 @@ public class MinePasswordActivity extends Activity {
         //实现数据库功能
         dbHelper = new DBHelper(this);
         dbHelper.open();
-        //获取管理员用户名
+        //获取用户用户名
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         //返回按钮响应
-        backBt.setOnClickListener(new BackBtLister());
+        backBt.setOnClickListener(new BackBtListener());
         //修改密码按钮响应
         editPasswordBt.setOnClickListener(new EditPasswordBtListener());
 
     }
 
-    private class BackBtLister implements View.OnClickListener {
+    private class BackBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             //直接关闭当前页面
