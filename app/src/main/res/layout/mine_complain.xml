@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/back_three">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/nav_frame"
@@ -40,10 +39,142 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/transparent"
+        android:background="@color/light_grey"
         app:layout_constraintHeight_percent="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nav_frame">
+        <!--投诉类型-->
+        <RelativeLayout
+            android:id="@+id/type_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/typeTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/complain_type_title"
+                android:textSize="18sp"
+                android:textColor="@color/light_brown" />
+
+            <Spinner
+                android:id="@+id/typeSp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/typeTv"
+                android:src="@color/black"
+                android:background="@drawable/spinner_border"
+                android:textColor="@color/light_silver"
+                android:prompt="@string/complain_type_hint" />
+        </RelativeLayout>
+
+        <!--问题描述-->
+        <RelativeLayout
+            android:id="@+id/question_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/type_frame">
+
+            <TextView
+                android:id="@+id/questionTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/complain_question_title"
+                android:textSize="18sp"
+                android:textColor="@color/light_brown" />
+
+            <RelativeLayout
+                android:id="@+id/questionRl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/questionTv">
+
+                <EditText
+                    android:id="@+id/wordEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/edittext_border"
+                    android:gravity="start|top"
+                    android:hint="@string/complain_question_hint"
+                    android:textColorHint="@color/light_silver"
+                    android:inputType="textMultiLine"
+                    android:maxLength="200"
+                    android:padding="12dp" />
+
+                <TextView
+                    android:id="@+id/wordTotalEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/wordEt"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="18dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/complain_question_num"
+                    android:textColor="@color/dark_silver"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wordCountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/wordEt"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toLeftOf="@id/wordTotalEt"
+                    android:text="@string/complain_question_sum"
+                    android:textColor="@color/red"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <!--联系方式-->
+        <RelativeLayout
+            android:id="@+id/contact_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/question_frame">
+
+            <TextView
+                android:id="@+id/contactTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/complain_contact_title"
+                android:textSize="18sp"
+                android:textColor="@color/light_brown" />
+
+            <EditText
+                android:id="@+id/contactEt"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/contactTv"
+                android:background="@drawable/edittext_border"
+                android:hint="@string/complain_contact_hint"
+                android:textColorHint="@color/light_silver"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:paddingHorizontal="12dp" />
+        </RelativeLayout>
+
+        <!--提交按钮-->
+        <Button
+            android:id="@+id/submitBt"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@+id/contact_frame"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/green"
+            android:textSize="18sp"
+            android:text="@string/complain_submit"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,15 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_Admin = "create table if not exists Admin("
             + "username text primary key,"
             + "password text)";
+    //创建投诉记录表
+    private static final String CREATE_Complaints = "create table if not exists Complaints("
+            + "id integer primary key autoincrement, "
+            + "complaint_username text not null, "
+            + "complaint_type text not null, "
+            + "complaint_content text not null, "
+            + "complaint_date text not null, "
+            + "complaint_contact text not null, "
+            + "handling_status text not null);";
     //数据库操作实例
     private static DBHelper instance;
     private SQLiteDatabase database;
@@ -51,6 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_User);
         db.execSQL(CREATE_Admin);
+        db.execSQL(CREATE_Complaints);
         //初始化创建一个管理员账号
         db.execSQL("insert into Admin(username,password)values('admin','123456')");
     }
@@ -124,6 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists User");
         db.execSQL("drop table if exists Admin");
+        db.execSQL("drop table if exists Complaints");
         onCreate(db);
     }
 

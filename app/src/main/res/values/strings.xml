@@ -48,4 +48,13 @@
     <string name="info_phone">电话</string>
     <string name="info_email">邮箱</string>
     <string name="complain_title">景区投诉</string>
+    <string name="complain_type_title">投诉类型</string>
+    <string name="complain_type_hint">请选择投诉问题类型</string>
+    <string name="complain_question_title">问题描述</string>
+    <string name="complain_question_hint">请描述您在景区所遇到的问题</string>
+    <string name="complain_question_num">/200</string>
+    <string name="complain_question_sum">0</string>
+    <string name="complain_contact_title">联系方式（电话）</string>
+    <string name="complain_contact_hint">请输入联系方式</string>
+    <string name="complain_submit">提交</string>
 </resources>
