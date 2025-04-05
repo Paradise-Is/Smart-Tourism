@@ -112,7 +112,7 @@ public class MineComplainActivity extends Activity {
                 String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
                 values.put("complaint_date", currentDate);
                 values.put("complaint_contact", contact);
-                values.put("handling_status", "未处理");
+                values.put("status", "未处理");
                 //添加投诉记录
                 long result = dbHelper.getDatabase().insert("Complaints", null, values);
                 if (result != -1) {

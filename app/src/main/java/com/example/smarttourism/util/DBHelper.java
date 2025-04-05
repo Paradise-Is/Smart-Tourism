@@ -33,7 +33,13 @@ public class DBHelper extends SQLiteOpenHelper {
             + "complaint_content text not null, "
             + "complaint_date text not null, "
             + "complaint_contact text not null, "
-            + "handling_status text not null);";
+            + "status text not null);";
+    //创建报警记录表
+    private static final String CREATE_Alarms = "create table if not exists Alarms("
+            + "id integer primary key autoincrement, "
+            + "alarm_username text not null, "
+            + "alarm_date text not null, "
+            + "status text not null);";
     //数据库操作实例
     private static DBHelper instance;
     private SQLiteDatabase database;

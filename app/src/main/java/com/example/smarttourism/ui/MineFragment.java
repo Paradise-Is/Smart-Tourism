@@ -2,6 +2,7 @@ package com.example.smarttourism.ui;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,6 +28,9 @@ import com.example.smarttourism.activity.MinePasswordActivity;
 import com.example.smarttourism.util.DBHelper;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MineFragment extends Fragment {
     //用户用户名
@@ -142,7 +146,17 @@ public class MineFragment extends Fragment {
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), "报警成功", Toast.LENGTH_SHORT).show();
+                    ContentValues values = new ContentValues();
+                    values.put("alarm_username", username);
+                    String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                    values.put("alarm_date", currentDate);
+                    values.put("status", "未处理");
+                    long result = dbHelper.getDatabase().insert("Alarms", null, values);
+                    if (result != -1) {
+                        Toast.makeText(getActivity(), "一键报警成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "出错了", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             builder.setNeutralButton("取消", null);
