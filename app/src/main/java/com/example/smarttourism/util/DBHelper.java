@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + "username text primary key,"
             + "password text)";
     //创建投诉记录表
-    private static final String CREATE_Complaints = "create table if not exists Complaints("
+    private static final String CREATE_Complaint = "create table if not exists Complaint("
             + "id integer primary key autoincrement, "
             + "complaint_username text not null, "
             + "complaint_type text not null, "
@@ -35,11 +35,19 @@ public class DBHelper extends SQLiteOpenHelper {
             + "complaint_contact text not null, "
             + "status text not null);";
     //创建报警记录表
-    private static final String CREATE_Alarms = "create table if not exists Alarms("
+    private static final String CREATE_Alarm = "create table if not exists Alarm("
             + "id integer primary key autoincrement, "
             + "alarm_username text not null, "
             + "alarm_date text not null, "
             + "status text not null);";
+    //创建攻略内容表
+    private static final String CREATE_Guide = "create table if not exists Guide("
+            + "id integer primary key autoincrement, "
+            + "guide_title text not null, "
+            + "guide_content text not null, "
+            + "guide_date text not null, "
+            + "guide_username text not null, "
+            + "guide_headshot text);";
     //数据库操作实例
     private static DBHelper instance;
     private SQLiteDatabase database;
@@ -66,7 +74,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_User);
         db.execSQL(CREATE_Admin);
-        db.execSQL(CREATE_Complaints);
+        db.execSQL(CREATE_Complaint);
+        db.execSQL(CREATE_Alarm);
+        db.execSQL(CREATE_Guide);
         //初始化创建一个管理员账号
         db.execSQL("insert into Admin(username,password)values('admin','123456')");
     }
@@ -140,7 +150,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists User");
         db.execSQL("drop table if exists Admin");
-        db.execSQL("drop table if exists Complaints");
+        db.execSQL("drop table if exists Complaint");
+        db.execSQL("drop table if exists Alarm");
+        db.execSQL("drop table if exists Guide");
         onCreate(db);
     }
 

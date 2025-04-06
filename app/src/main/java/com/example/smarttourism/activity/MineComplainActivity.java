@@ -114,7 +114,7 @@ public class MineComplainActivity extends Activity {
                 values.put("complaint_contact", contact);
                 values.put("status", "未处理");
                 //添加投诉记录
-                long result = dbHelper.getDatabase().insert("Complaints", null, values);
+                long result = dbHelper.getDatabase().insert("Complaint", null, values);
                 if (result != -1) {
                     Toast.makeText(MineComplainActivity.this, "投诉成功，感谢您的建议", Toast.LENGTH_SHORT).show();
                     finish();

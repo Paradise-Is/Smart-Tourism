@@ -57,4 +57,10 @@
     <string name="complain_contact_title">联系方式（电话）</string>
     <string name="complain_contact_hint">请输入联系方式</string>
     <string name="complain_submit">提交</string>
+    <string name="guide_info">攻略详情</string>
+    <string name="guide_add">攻略发布</string>
+    <string name="add_title">填写标题</string>
+    <string name="add_num">30</string>
+    <string name="add_content">添加正文</string>
+    <string name="add_publish">发布</string>
 </resources>

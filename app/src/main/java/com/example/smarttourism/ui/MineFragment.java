@@ -151,7 +151,7 @@ public class MineFragment extends Fragment {
                     String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
                     values.put("alarm_date", currentDate);
                     values.put("status", "未处理");
-                    long result = dbHelper.getDatabase().insert("Alarms", null, values);
+                    long result = dbHelper.getDatabase().insert("Alarm", null, values);
                     if (result != -1) {
                         Toast.makeText(getActivity(), "一键报警成功", Toast.LENGTH_SHORT).show();
                     } else {
