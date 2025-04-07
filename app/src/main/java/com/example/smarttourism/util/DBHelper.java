@@ -46,8 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + "guide_title text not null, "
             + "guide_content text not null, "
             + "guide_date text not null, "
-            + "guide_username text not null, "
-            + "guide_headshot text);";
+            + "guide_username text not null);";
     //数据库操作实例
     private static DBHelper instance;
     private SQLiteDatabase database;

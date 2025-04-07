@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,9 +73,7 @@ public class GuideFragment extends Fragment {
                 String guide_date = cursor.getString(cursor.getColumnIndex("guide_date"));
                 @SuppressLint("Range")
                 String guide_username = cursor.getString(cursor.getColumnIndex("guide_username"));
-                @SuppressLint("Range")
-                String guide_headshot = cursor.getString(cursor.getColumnIndex("guide_headshot"));
-                data.add(new Guide(id, guide_title, guide_content, guide_date, guide_username, guide_headshot));
+                data.add(new Guide(id, guide_title, guide_content, guide_date, guide_username));
             } while (cursor.moveToNext());
         }
         cursor.close();
