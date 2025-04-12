@@ -38,8 +38,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_Alarm = "create table if not exists Alarm("
             + "id integer primary key autoincrement, "
             + "alarm_username text not null, "
-            + "alarm_date text not null, "
-            + "status text not null);";
+            + "alarm_location text not null, "
+            + "alarm_date text not null); ";
     //创建攻略内容表
     private static final String CREATE_Guide = "create table if not exists Guide("
             + "id integer primary key autoincrement, "
