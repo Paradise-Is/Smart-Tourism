@@ -63,4 +63,7 @@
     <string name="add_num">30</string>
     <string name="add_content">添加正文</string>
     <string name="add_publish">发布</string>
+    <string name="complaint_username">投诉用户：</string>
+    <string name="complaint_type">投诉类型：</string>
+    <string name="complaint_content">投诉内容：</string>
 </resources>
