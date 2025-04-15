@@ -12,7 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.smarttourism.R;
-import com.example.smarttourism.ui.AdminHomeFragment;
 import com.example.smarttourism.ui.AnalysisFragment;
 import com.example.smarttourism.ui.CoachFragment;
 import com.example.smarttourism.ui.ComplaintFragment;
@@ -43,7 +42,7 @@ public class AdminMainActivity extends AppCompatActivity {
         //默认加载主页
         if (savedInstanceState == null) {
             //创建片段实例
-            AdminHomeFragment defaultFragment = new AdminHomeFragment();
+            AnalysisFragment defaultFragment = new AnalysisFragment();
             //构建传递给片段的参数
             Bundle args = new Bundle();
             //将用户名作为参数传递过去，可以通过getArguments()来获取这个传递过来的文本数据
@@ -55,7 +54,7 @@ public class AdminMainActivity extends AppCompatActivity {
                     .replace(R.id.main_content, defaultFragment)
                     .commit();
             //设置菜单项为选中状态
-            navigationView.setCheckedItem(R.id.nav_home);
+            navigationView.setCheckedItem(R.id.nav_analysis);
         }
         //实现菜单项监听
         navigationView.setNavigationItemSelectedListener(new NavItemSelectedListener());
@@ -71,9 +70,6 @@ public class AdminMainActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             //处理不同选项点击事件
             switch (item.getItemId()) {
-                case R.id.nav_home:
-                    selectedFragment = new AdminHomeFragment();
-                    break;
                 case R.id.nav_analysis:
                     selectedFragment = new AnalysisFragment();
                     break;

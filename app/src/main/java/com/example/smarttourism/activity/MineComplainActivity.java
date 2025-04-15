@@ -54,7 +54,7 @@ public class MineComplainActivity extends Activity {
         username = intent.getStringExtra("username");
         //下拉框的选项数据
         String[] complainTypes = {"景区服务问题", "景区管理问题", "其他问题"};
-        //创建 ArrayAdapter
+        //创建ArrayAdapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, complainTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //设置适配器

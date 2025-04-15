@@ -47,6 +47,20 @@ public class DBHelper extends SQLiteOpenHelper {
             + "guide_content text not null, "
             + "guide_date text not null, "
             + "guide_username text not null);";
+    //创建讲解员信息表
+    private static final String CREATE_Docent = "create table if not exists Docent("
+            + "id integer primary key autoincrement, "
+            + "docent_name text not null, "
+            + "docent_gender text not null, "
+            + "docent_age text not null, "
+            + "docent_photo text not null, "
+            + "docent_phone text not null);";
+    //创建游览车信息表
+    private static final String CREATE_Coach = "create table if not exists Coach("
+            + "id integer primary key autoincrement, "
+            + "coach_license text not null, "
+            + "docent_capacity text not null, "
+            + "docent_status text not null);";
     //数据库操作实例
     private static DBHelper instance;
     private SQLiteDatabase database;
@@ -76,6 +90,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Complaint);
         db.execSQL(CREATE_Alarm);
         db.execSQL(CREATE_Guide);
+        db.execSQL(CREATE_Docent);
+        db.execSQL(CREATE_Coach);
         //初始化创建一个管理员账号
         db.execSQL("insert into Admin(username,password)values('admin','123456')");
     }
@@ -152,6 +168,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists Complaint");
         db.execSQL("drop table if exists Alarm");
         db.execSQL("drop table if exists Guide");
+        db.execSQL("drop table if exists Docent");
+        db.execSQL("drop table if exists Coach");
         onCreate(db);
     }
 

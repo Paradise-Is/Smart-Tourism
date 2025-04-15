@@ -63,12 +63,13 @@
                 android:id="@+id/typeSp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginBottom="10dp"
                 android:layout_below="@+id/typeTv"
-                android:src="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/spinner_border"
-                android:textColor="@color/light_silver"
-                android:prompt="@string/complain_type_hint" />
+                android:prompt="@string/complain_type_hint"
+                android:src="@color/black"
+                android:textColor="@color/light_silver" />
         </RelativeLayout>
 
         <!--问题描述-->

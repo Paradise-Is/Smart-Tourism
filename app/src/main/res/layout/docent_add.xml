@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/nav_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--返回箭头-->
+        <ImageView
+            android:id="@+id/backBt"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:src="@mipmap/back_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/info_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/logBt"
+            android:layout_toRightOf="@+id/backBt"
+            android:gravity="center"
+            android:text="@string/docent_add"
+            android:textColor="@color/light_black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <!--登记按钮-->
+        <TextView
+            android:id="@+id/logBt"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="@string/docent_add_bt"
+            android:textColor="@color/light_brown"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/light_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nav_frame">
+        <!--讲解员照片-->
+        <RelativeLayout
+            android:id="@+id/photo_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radius_border_white">
+
+            <TextView
+                android:id="@+id/photoTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/docent_add_photo"
+                android:textColor="@color/light_black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/photoImg"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/photoTv"
+                android:background="@mipmap/photo_upload"
+                android:scaleType="centerCrop" />
+        </RelativeLayout>
+        <!--讲解员姓名-->
+        <RelativeLayout
+            android:id="@+id/name_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/photo_frame"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radius_border_white">
+
+            <TextView
+                android:id="@+id/nameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/docent_add_name"
+                android:textColor="@color/light_black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/nameEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/nameTv"
+                android:hint="@string/docent_add_name_hint"
+                android:inputType="text"
+                android:maxLength="15"
+                android:paddingHorizontal="12dp"
+                android:textColorHint="@color/light_silver"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <!--讲解员性别-->
+        <RelativeLayout
+            android:id="@+id/gender_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_frame"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radius_border_white">
+
+            <TextView
+                android:id="@+id/genderTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/docent_add_gender"
+                android:textColor="@color/light_black"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/genderSp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/genderTv"
+                android:prompt="@string/docent_add_gender_hint"
+                android:src="@color/black"
+                android:background="@drawable/spinner_arrow"
+                android:textColor="@color/light_silver"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <!--讲解员年龄-->
+        <RelativeLayout
+            android:id="@+id/age_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gender_frame"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radius_border_white">
+
+            <TextView
+                android:id="@+id/ageTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/docent_add_age"
+                android:textColor="@color/light_black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ageEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/ageTv"
+                android:hint="@string/docent_add_age_hint"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingHorizontal="12dp"
+                android:textColorHint="@color/light_silver"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <!--讲解员联系电话-->
+        <RelativeLayout
+            android:id="@+id/phone_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/age_frame"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radius_border_white">
+
+            <TextView
+                android:id="@+id/phoneTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/docent_add_phone"
+                android:textColor="@color/light_black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/phoneEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/phoneTv"
+                android:hint="@string/docent_add_phone_hint"
+                android:inputType="number"
+                android:maxLength="11"
+                android:paddingHorizontal="12dp"
+                android:textColorHint="@color/light_silver"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

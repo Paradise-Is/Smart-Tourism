@@ -74,4 +74,19 @@
     <string name="complaint_username">投诉用户：</string>
     <string name="complaint_type">投诉类型：</string>
     <string name="complaint_content">投诉内容：</string>
+    <string name="docent_info">讲解员信息</string>
+    <string name="docent_add">讲解员登记</string>
+    <string name="docent_add_bt">登记</string>
+    <string name="docent_add_photo">个人照片（上传照片）</string>
+    <string name="docent_add_name">姓名</string>
+    <string name="docent_add_name_hint">输入讲解员姓名</string>
+    <string name="docent_add_gender">性别</string>
+    <string name="docent_add_gender_hint">选择讲解员性别</string>
+    <string name="docent_add_age">年龄</string>
+    <string name="docent_add_age_hint">输入讲解员年龄</string>
+    <string name="docent_add_phone">联系电话</string>
+    <string name="docent_add_phone_hint">输入讲解员联系电话</string>
+    <string name="docent_item_gender">性别：</string>
+    <string name="docent_item_age">年龄：</string>
+    <string name="docent_item_phone">联系电话：</string>
 </resources>
