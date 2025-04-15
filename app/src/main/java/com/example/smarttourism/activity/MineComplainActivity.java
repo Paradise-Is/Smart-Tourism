@@ -1,8 +1,10 @@
 package com.example.smarttourism.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -52,6 +54,18 @@ public class MineComplainActivity extends Activity {
         //获取用户用户名
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
+        //设置默认联系方式为用户自己的电话
+        String selection = "username=?";
+        String[] selectionArgs = {username};
+        Cursor cursor = dbHelper.getDatabase().query("User", null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToNext()) {
+            @SuppressLint("Range")
+            String dbPhone = cursor.getString(cursor.getColumnIndex("phone"));
+            //如果用户设置用户联系电话，则默认显示
+            if (dbPhone != null && !dbPhone.isEmpty()) {
+                contactText.setText(dbPhone);
+            }
+        }
         //下拉框的选项数据
         String[] complainTypes = {"景区服务问题", "景区管理问题", "其他问题"};
         //创建ArrayAdapter
