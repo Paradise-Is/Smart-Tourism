@@ -75,6 +75,7 @@
     <string name="complaint_type">投诉类型：</string>
     <string name="complaint_content">投诉内容：</string>
     <string name="docent_info">讲解员信息</string>
+    <string name="docent_info_photo">点击上传新照片</string>
     <string name="docent_add">讲解员登记</string>
     <string name="docent_add_bt">登记</string>
     <string name="docent_add_photo">个人照片（上传照片）</string>

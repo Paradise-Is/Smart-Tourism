@@ -449,7 +449,7 @@ public class MineInfoActivity extends Activity {
             input.setHint("请输入你的电话");
             //显示当前昵称
             input.setText(phoneInfo.getText());
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
             builder.setView(input);
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
