@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -44,12 +45,15 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
     //搜索参数缓存
     private double searchLat, searchLon;
     private String searchKeyword;
+    private SwipeRefreshLayout swipeRefresh;
     private RecyclerView mapRecyclerView;
     private MapAdapter mapAdapter;
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
-    // 用来存放附近地点数据
+    //用来存放附近地点数据
     private List<AddressBean> addressList = new ArrayList<>();
+    //用于备份原始数据列表
+    private List<AddressBean> originalList = new ArrayList<>();
 
     public static SightsFragment newInstance(String content) {
         Bundle arguments = new Bundle();
@@ -63,9 +67,20 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.map_tab, container, false);
         //获取组件
+        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
         mapRecyclerView = (RecyclerView) view.findViewById(R.id.mapRecyclerView);
         //获取地图列表标识
         surroundings = getArguments().getString(EXTRA_CONTENT);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mLocationClient != null) {
+                    mLocationClient.startLocation();
+                } else {
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+        });
         //初始化 RecyclerView
         mapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mapAdapter = new MapAdapter(getActivity());
@@ -86,6 +101,13 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
                 }
             }
         });
+        //实现周边信息项点击响应
+        mapAdapter.setOnItemClickListener(new MapAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String name, String content) {
+                Toast.makeText(getActivity(), "您点击了: " + name, Toast.LENGTH_SHORT).show();
+            }
+        });
         //初始化定位功能
         initLocationClient();
         return view;
@@ -99,10 +121,8 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
             //高精度定位
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             mLocationOption.setNeedAddress(true);
-            //设置为连续定位并实时更新
-            mLocationOption.setOnceLocation(false);
-            //每30秒更新一次
-            mLocationOption.setInterval(30000);
+            // 单次定位
+            mLocationOption.setOnceLocation(true);
             mLocationClient.setLocationOption(mLocationOption);
             mLocationClient.setLocationListener(this);
         } catch (Exception e) {
@@ -139,6 +159,9 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
         if (aMapLocation == null || aMapLocation.getErrorCode() != 0) {
             Toast.makeText(getActivity(), "定位失败，无法获取您当前位置：", Toast.LENGTH_SHORT).show();
             return;
+        }
+        if (swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
         }
         //缓存当前坐标
         currLat = aMapLocation.getLatitude();
@@ -185,9 +208,9 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
         PoiSearch.Query query = new PoiSearch.Query(searchKeyword, "", "");
         query.setPageSize(PAGE_SIZE);
         query.setPageNum(page);
-        //设置搜索边界：中心点为当前位置，半径5000米
+        //设置搜索边界：中心点为当前位置，半径10公里
         LatLonPoint center = new LatLonPoint(searchLat, searchLon);
-        PoiSearch.SearchBound bound = new PoiSearch.SearchBound(center, 5000);
+        PoiSearch.SearchBound bound = new PoiSearch.SearchBound(center, 10000);
         try {
             PoiSearch poiSearch = new PoiSearch(getActivity(), query);
             poiSearch.setBound(bound);
@@ -208,14 +231,27 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
         if (rCode == 1000 && result != null) {
             //获取POI组数列表
             List<PoiItem> items = result.getPois();
-            if (pageNum == 0 && items.isEmpty()) {
-                Toast.makeText(getActivity(), "未找到任何结果", Toast.LENGTH_SHORT).show();
-                return;
+            if (pageNum == 0) {
+                originalList.clear();
+                if (items.isEmpty()) {
+                    Toast.makeText(getActivity(), "未找到任何结果", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
+            List<AddressBean> pageBeans = new ArrayList<>();
             //添加新数据
             for (PoiItem it : items) {
                 LatLonPoint p = it.getLatLonPoint();
-                addressList.add(new AddressBean(p.getLongitude(), p.getLatitude(), it.getTitle(), it.getSnippet()));
+                pageBeans.add(new AddressBean(p.getLongitude(), p.getLatitude(), it.getTitle(), it.getSnippet()));
+            }
+            if (pageNum == 0) {
+                //第一页：重置并同步originalList
+                originalList.addAll(pageBeans);
+                addressList.clear();
+                addressList.addAll(pageBeans);
+            } else {
+                //后续页：只追加 addressList
+                addressList.addAll(pageBeans);
             }
             mapAdapter.notifyDataSetChanged();
             // 判断是否最后一页
@@ -226,6 +262,25 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
         } else {
             Toast.makeText(getActivity(), "搜索失败，错误码：" + rCode, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //实现查询功能
+    public void doSearch(String keyword) {
+        searchKeyword = keyword;
+        // 根据标签决定搜索中心
+        if ("当前周边".equals(surroundings)) {
+            searchLat = currLat;  searchLon = currLon;
+        } else {
+            searchLat = EAST_LAKE_CENTER.getLatitude();
+            searchLon = EAST_LAKE_CENTER.getLongitude();
+        }
+        // 重置分页状态
+        pageNum = 0;
+        isLastPage = false;
+        addressList.clear();
+        originalList.clear();
+        mapAdapter.notifyDataSetChanged();
+        loadPage(0);
     }
 
     @Override

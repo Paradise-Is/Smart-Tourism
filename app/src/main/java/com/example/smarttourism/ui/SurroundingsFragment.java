@@ -1,11 +1,9 @@
 package com.example.smarttourism.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,25 +13,9 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.services.core.AMapException;
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.poisearch.PoiResult;
-import com.amap.api.services.poisearch.PoiSearch;
 import com.example.smarttourism.R;
-import com.example.smarttourism.activity.DocentAddActivity;
-import com.example.smarttourism.activity.DocentInfoActivity;
-import com.example.smarttourism.adapter.MapAdapter;
-import com.example.smarttourism.entity.AddressBean;
-import com.example.smarttourism.entity.Docent;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -118,6 +100,14 @@ public class SurroundingsFragment extends Fragment {
     private class SearchBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            String keyword = searchEt.getText().toString().trim();
+            if (keyword.isEmpty()) {
+                Toast.makeText(getActivity(), "请输入搜索关键字", Toast.LENGTH_SHORT).show();
+            } else {
+                int idx = mapPager.getCurrentItem();
+                SightsFragment f = (SightsFragment) tabFragments.get(idx);
+                f.doSearch(keyword);
+            }
         }
     }
 }

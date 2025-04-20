@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.activity:activity:1.2.0")
     implementation("androidx.fragment:fragment:1.3.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
