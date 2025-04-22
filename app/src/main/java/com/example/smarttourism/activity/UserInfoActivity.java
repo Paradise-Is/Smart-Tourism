@@ -32,7 +32,7 @@ public class UserInfoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //构建显示用户信息界面
+        //构建显示报警用户信息界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
         //获取组件

@@ -90,7 +90,7 @@ public class GuideAddActivity extends Activity {
             } else if (content.equals("")) {
                 Toast.makeText(GuideAddActivity.this, "攻略内容不能为空", Toast.LENGTH_SHORT).show();
             } else {
-                //构造投诉记录的各字段数据
+                //构造攻略信息的各字段数据
                 ContentValues values = new ContentValues();
                 values.put("guide_title", title);
                 values.put("guide_content", content);

@@ -32,7 +32,7 @@ public class GuideInfoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //构建编写攻略界面
+        //构建攻略详情界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guide_info);
         //获取组件

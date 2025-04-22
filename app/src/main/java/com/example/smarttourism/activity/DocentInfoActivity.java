@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 
 public class DocentInfoActivity extends Activity {
     private static final int REQUEST_CAMERA_CODE = 1001;
-    //用户用户名
+    //管理员用户名
     private String username;
     private int id;
     private ImageView backBt;
@@ -62,7 +62,7 @@ public class DocentInfoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //构建编写攻略界面
+        //构建讲解员信息界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.docent_info);
         //获取组件

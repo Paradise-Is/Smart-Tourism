@@ -25,7 +25,7 @@ public class LoginActivity extends Activity {
     private TextView registerBt;
     private TextView forgetBt;
     private ImageView ifPwdShow;
-    //输入框密码是否是隐藏，默认为true
+    //输入框密码是否是隐藏，默认为false(隐藏)
     private boolean isHide = false;
     private DBHelper dbHelper;
 

@@ -26,7 +26,7 @@ public class UserLocationActivity extends Activity {
 
 
     protected void onCreate(Bundle savedInstanceState) {
-        //构建显示用户个人信息界面
+        //构建显示报警用户位置界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_location);
         //获取组件

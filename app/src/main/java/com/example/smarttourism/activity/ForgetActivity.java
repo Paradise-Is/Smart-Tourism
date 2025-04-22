@@ -35,7 +35,7 @@ public class ForgetActivity extends Activity {
         dbHelper.open();
         //返回按钮响应
         backBt.setOnClickListener(new BackBtLister());
-        //管理员登录按钮响应
+        //找回密码按钮响应
         forgetBt.setOnClickListener(new ForgetBtLister());
     }
 

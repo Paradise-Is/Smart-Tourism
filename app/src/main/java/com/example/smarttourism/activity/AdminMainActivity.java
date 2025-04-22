@@ -50,9 +50,7 @@ public class AdminMainActivity extends AppCompatActivity {
             //将参数设置给片段
             defaultFragment.setArguments(args);
             //加载默认片段到容器中
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_content, defaultFragment)
-                    .commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_content, defaultFragment).commit();
             //设置菜单项为选中状态
             navigationView.setCheckedItem(R.id.nav_analysis);
         }

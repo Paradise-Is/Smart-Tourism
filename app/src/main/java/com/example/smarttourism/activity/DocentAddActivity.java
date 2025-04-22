@@ -213,14 +213,14 @@ public class DocentAddActivity extends Activity {
             } else if (!phonePattern.matcher(phone).matches()) {
                 Toast.makeText(DocentAddActivity.this, "联系电话不符合规范", Toast.LENGTH_SHORT).show();
             } else {
-                //构造投诉记录的各字段数据
+                //构造讲解员的各字段数据
                 ContentValues values = new ContentValues();
                 values.put("docent_name", name);
                 values.put("docent_gender", gender);
                 values.put("docent_age", age);
                 values.put("docent_photo", photoPath);
                 values.put("docent_phone", phone);
-                //添加投诉记录
+                //添加讲解员信息
                 long result = dbHelper.getDatabase().insert("Docent", null, values);
                 if (result != -1) {
                     Toast.makeText(DocentAddActivity.this, "成功登记讲解员", Toast.LENGTH_SHORT).show();

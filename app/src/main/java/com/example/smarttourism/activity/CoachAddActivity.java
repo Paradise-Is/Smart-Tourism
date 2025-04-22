@@ -61,12 +61,12 @@ public class CoachAddActivity extends Activity {
             } else if (capacity.equals("")) {
                 Toast.makeText(CoachAddActivity.this, "游览车载客量不能为空", Toast.LENGTH_SHORT).show();
             }  else {
-                //构造投诉记录的各字段数据
+                //构造游览车的各字段数据
                 ContentValues values = new ContentValues();
                 values.put("coach_license", license);
                 values.put("coach_capacity", capacity);
                 values.put("status", "待命中");
-                //添加投诉记录
+                //添加游览车信息
                 long result = dbHelper.getDatabase().insert("Coach", null, values);
                 if (result != -1) {
                     Toast.makeText(CoachAddActivity.this, "游览车登记成功", Toast.LENGTH_SHORT).show();
