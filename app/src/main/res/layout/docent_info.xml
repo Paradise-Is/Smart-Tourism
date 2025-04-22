@@ -28,7 +28,7 @@
             android:layout_toLeftOf="@+id/deleteRl"
             android:layout_toRightOf="@+id/backBt"
             android:gravity="center"
-            android:text="@string/docent_add"
+            android:text="@string/docent_info"
             android:textColor="@color/light_black"
             android:textSize="20sp"
             android:textStyle="bold" />

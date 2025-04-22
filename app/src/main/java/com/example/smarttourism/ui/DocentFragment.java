@@ -90,7 +90,6 @@ public class DocentFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), DocentAddActivity.class);
-            intent.putExtra("username", username);
             startActivity(intent);
         }
     }

@@ -40,8 +40,6 @@ import java.util.regex.Pattern;
 
 public class DocentAddActivity extends Activity {
     private static final int REQUEST_CAMERA_CODE = 1001;
-    //用户用户名
-    private String username;
     private ImageView backBt;
     private TextView logBt;
     private ImageView photoImg;
@@ -54,7 +52,7 @@ public class DocentAddActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //构建编写攻略界面
+        //构建讲解员登记界面
         super.onCreate(savedInstanceState);
         setContentView(R.layout.docent_add);
         //获取组件
@@ -68,9 +66,6 @@ public class DocentAddActivity extends Activity {
         //实现数据库功能
         dbHelper = new DBHelper(this);
         dbHelper.open();
-        //获取用户用户名
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
         //下拉框的选项数据
         String[] genderTypes = {"男", "女"};
         //创建 ArrayAdapter

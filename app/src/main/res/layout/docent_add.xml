@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:text="@string/docent_add_bt"
+            android:text="@string/docent_addBt"
             android:textColor="@color/light_brown"
             android:textSize="14sp" />
     </RelativeLayout>

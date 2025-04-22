@@ -20,6 +20,10 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.example.smarttourism.R;
 import com.example.smarttourism.activity.LoginActivity;
 import com.example.smarttourism.activity.MineComplainActivity;
@@ -32,9 +36,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class MineFragment extends Fragment {
+public class MineFragment extends Fragment implements AMapLocationListener {
     //用户用户名
     private String username;
+    //当前位置
+    private double currLat, currLon;
+    //高德定位
+    private AMapLocationClient mLocationClient;
+    private AMapLocationClientOption mLocationOption;
     private ConstraintLayout infoBt;
     private ImageView headshot;
     private TextView tvNickname;
@@ -62,6 +71,8 @@ public class MineFragment extends Fragment {
         //实现数据库功能
         dbHelper = new DBHelper(getActivity());
         dbHelper.open();
+        // 初始化高德定位
+        initLocationClient();
         //获取从Activity传来的数据
         Bundle args = getArguments();
         username = args.getString("username");
@@ -80,6 +91,45 @@ public class MineFragment extends Fragment {
     public void onResume() {
         super.onResume();
         RefreshUserInfo();
+        if (mLocationClient != null)
+            mLocationClient.startLocation();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mLocationClient != null) mLocationClient.stopLocation();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mLocationClient != null) mLocationClient.onDestroy();
+    }
+
+    private void initLocationClient() {
+        try {
+            //创建定位客户端对象
+            mLocationClient = new AMapLocationClient(getActivity());
+            mLocationOption = new AMapLocationClientOption();
+            //高精度定位
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            //连续定位，间隔 5 秒
+            mLocationOption.setOnceLocation(false);
+            mLocationOption.setInterval(5000);
+            mLocationClient.setLocationOption(mLocationOption);
+            mLocationClient.setLocationListener(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
+            currLat = aMapLocation.getLatitude();
+            currLon = aMapLocation.getLongitude();
+        }
     }
 
     //刷新用户信息
@@ -122,8 +172,8 @@ public class MineFragment extends Fragment {
     private class InfoBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent= new Intent(getActivity(), MineInfoActivity.class);
-            intent.putExtra("username",username);
+            Intent intent = new Intent(getActivity(), MineInfoActivity.class);
+            intent.putExtra("username", username);
             startActivity(intent);
         }
     }
@@ -131,8 +181,8 @@ public class MineFragment extends Fragment {
     private class ComplainBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent= new Intent(getActivity(), MineComplainActivity.class);
-            intent.putExtra("username",username);
+            Intent intent = new Intent(getActivity(), MineComplainActivity.class);
+            intent.putExtra("username", username);
             startActivity(intent);
         }
     }
@@ -150,7 +200,9 @@ public class MineFragment extends Fragment {
                     values.put("alarm_username", username);
                     String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
                     values.put("alarm_date", currentDate);
-                    values.put("status", "未处理");
+                    //将当前位置写入数据库中
+                    values.put("alarm_latitude",currLat);
+                    values.put("alarm_longitude",currLon);
                     long result = dbHelper.getDatabase().insert("Alarm", null, values);
                     if (result != -1) {
                         Toast.makeText(getActivity(), "一键报警成功", Toast.LENGTH_SHORT).show();
@@ -167,8 +219,8 @@ public class MineFragment extends Fragment {
     private class PasswordBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent= new Intent(getActivity(), MinePasswordActivity.class);
-            intent.putExtra("username",username);
+            Intent intent = new Intent(getActivity(), MinePasswordActivity.class);
+            intent.putExtra("username", username);
             startActivity(intent);
         }
     }
@@ -185,7 +237,7 @@ public class MineFragment extends Fragment {
                     //从表User中删除指定用户的记录
                     dbHelper.getDatabase().delete("User", "username = ? ", new String[]{username});
                     Toast.makeText(getActivity(), "用户已注销", Toast.LENGTH_SHORT).show();
-                    Intent intent= new Intent(getActivity(), LoginActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
             });
