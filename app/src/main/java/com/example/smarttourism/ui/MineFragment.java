@@ -40,7 +40,7 @@ public class MineFragment extends Fragment implements AMapLocationListener {
     //用户用户名
     private String username;
     //当前位置
-    private double currLat, currLon;
+    private Double currLat, currLon;
     //高德定位
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
