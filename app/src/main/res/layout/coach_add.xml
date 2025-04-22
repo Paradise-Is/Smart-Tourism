@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/nav_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--返回箭头-->
+        <ImageView
+            android:id="@+id/backBt"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:src="@mipmap/back_button" />
+
+        <TextView
+            android:id="@+id/info_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/addBt"
+            android:layout_toRightOf="@+id/backBt"
+            android:gravity="center"
+            android:text="@string/coach_add"
+            android:textColor="@color/light_black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <!--登记按钮-->
+        <TextView
+            android:id="@+id/addBt"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="@string/docent_addBt"
+            android:textColor="@color/light_brown"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/light_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nav_frame">
+        <!--游览车车牌号-->
+        <RelativeLayout
+            android:id="@+id/license_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radius_border_white">
+
+            <TextView
+                android:id="@+id/licenseTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/coach_add_license"
+                android:textColor="@color/light_black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/licenseEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/licenseTv"
+                android:hint="@string/coach_add_license_hint"
+                android:inputType="text"
+                android:maxLength="15"
+                android:paddingHorizontal="12dp"
+                android:textColorHint="@color/light_silver"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <!--游览车载客量-->
+        <RelativeLayout
+            android:id="@+id/capacity_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/license_frame"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radius_border_white">
+
+            <TextView
+                android:id="@+id/capacityTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/coach_add_capacity"
+                android:textColor="@color/light_black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/capacityEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/capacityTv"
+                android:hint="@string/coach_add_capacity_hint"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingHorizontal="12dp"
+                android:textColorHint="@color/light_silver"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
