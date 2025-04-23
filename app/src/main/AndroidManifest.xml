@@ -5,7 +5,9 @@
     <!--用于使用设备相机-->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- 表示应用支持使用相机，但不是必须的，防止某些无摄像头设备安装失败 -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
     <!--允许应用发送和接收粘性广播-->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <!--用于进行网络定位-->
@@ -196,6 +198,26 @@
         </activity>
         <activity
             android:name=".activity.CoachAddActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmartTourism">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.RouteActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmartTourism">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.RouteDetailActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartTourism">
             <intent-filter>

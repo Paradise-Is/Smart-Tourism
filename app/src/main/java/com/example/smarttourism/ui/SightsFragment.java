@@ -1,5 +1,6 @@
 package com.example.smarttourism.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.example.smarttourism.R;
+import com.example.smarttourism.activity.RouteActivity;
 import com.example.smarttourism.adapter.MapAdapter;
 import com.example.smarttourism.entity.AddressBean;
 
@@ -104,8 +106,12 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
         //实现周边信息项点击响应
         mapAdapter.setOnItemClickListener(new MapAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(String name, String content) {
-                Toast.makeText(getActivity(), "您点击了: " + name, Toast.LENGTH_SHORT).show();
+            public void onItemClick(AddressBean item) {
+                Intent intent = new Intent(getActivity(), RouteActivity.class);
+                //传入目标点坐标
+                intent.putExtra("endLatitude", item.getLatitude());
+                intent.putExtra("endLongitude", item.getLongitude());
+                startActivity(intent);
             }
         });
         //初始化定位功能
@@ -269,7 +275,8 @@ public class SightsFragment extends Fragment implements AMapLocationListener, Po
         searchKeyword = keyword;
         // 根据标签决定搜索中心
         if ("当前周边".equals(surroundings)) {
-            searchLat = currLat;  searchLon = currLon;
+            searchLat = currLat;
+            searchLon = currLon;
         } else {
             searchLat = EAST_LAKE_CENTER.getLatitude();
             searchLon = EAST_LAKE_CENTER.getLongitude();

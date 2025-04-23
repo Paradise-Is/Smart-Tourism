@@ -37,17 +37,16 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        if (list != null && list.size() > 0) {
-            //使用传入的 position i立即绑定
-            viewHolder.mMapName.setText(list.get(i).getTitle());
-            viewHolder.mMapContent.setText(list.get(i).getText());
-        }
+        //先用立即绑定显示
+        AddressBean item = list.get(i);
+        viewHolder.mMapName.setText(item.getTitle());
+        viewHolder.mMapContent.setText(item.getText());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = viewHolder.getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION && mItemClickListener != null) {
-                    mItemClickListener.onItemClick(list.get(position).getTitle(), list.get(position).getText());
+                int pos = viewHolder.getBindingAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION && mItemClickListener != null) {
+                    mItemClickListener.onItemClick(list.get(pos));
                 }
             }
         });
@@ -65,7 +64,7 @@ public class MapAdapter extends RecyclerView.Adapter<MapAdapter.ViewHolder> {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(String name, String content);
+        void onItemClick(AddressBean item);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
