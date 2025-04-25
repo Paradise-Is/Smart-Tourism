@@ -123,7 +123,7 @@ public class MineComplainActivity extends Activity {
                 values.put("complaint_username", username);
                 values.put("complaint_type", type);
                 values.put("complaint_content", question);
-                String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
                 values.put("complaint_date", currentDate);
                 values.put("complaint_contact", contact);
                 values.put("status", "未处理");

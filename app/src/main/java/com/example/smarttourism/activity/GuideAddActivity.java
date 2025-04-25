@@ -94,7 +94,7 @@ public class GuideAddActivity extends Activity {
                 ContentValues values = new ContentValues();
                 values.put("guide_title", title);
                 values.put("guide_content", content);
-                String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
                 values.put("guide_date", currentDate);
                 values.put("guide_username", username);
                 //发布攻略

@@ -198,7 +198,7 @@ public class MineFragment extends Fragment implements AMapLocationListener {
                 public void onClick(DialogInterface dialog, int which) {
                     ContentValues values = new ContentValues();
                     values.put("alarm_username", username);
-                    String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                    String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
                     values.put("alarm_date", currentDate);
                     //将当前位置写入数据库中
                     values.put("alarm_latitude",currLat);
