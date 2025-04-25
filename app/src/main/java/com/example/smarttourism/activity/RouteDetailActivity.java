@@ -42,9 +42,7 @@ public class RouteDetailActivity extends Activity {
         initView();
     }
 
-    /**
-     * 初始化视图
-     */
+    //初始化视图
     private void initView() {
         toolbar.setNavigationOnClickListener(v -> finish());
         Intent intent = getIntent();
