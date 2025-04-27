@@ -1,7 +1,10 @@
 package com.example.smarttourism.ui;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +37,19 @@ import com.amap.api.services.geocoder.RegeocodeAddress;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.example.smarttourism.R;
+import com.example.smarttourism.activity.SightInfoActivity;
 import com.example.smarttourism.databinding.MenuHomeBinding;
+import com.example.smarttourism.util.DBHelper;
 
 public class UserHomeFragment extends Fragment implements AMapLocationListener, LocationSource, AMap.OnMapClickListener, GeocodeSearch.OnGeocodeSearchListener {
+    //解析成功标识码
+    private static final int PARSE_SUCCESS_CODE = 1000;
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
+    //用户用户名
+    private String username;
     private MenuHomeBinding binding;
     //请求权限意图
     private ActivityResultLauncher<String> requestPermission;
@@ -50,8 +59,7 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
     private LocationSource.OnLocationChangedListener mListener = null;
     //地理编码搜索
     private GeocodeSearch geocodeSearch;
-    //解析成功标识码
-    private static final int PARSE_SUCCESS_CODE = 1000;
+    private DBHelper dbHelper;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +82,12 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //实现数据库功能
+        dbHelper = new DBHelper(getActivity());
+        dbHelper.open();
+        //获取从Activity传来的数据
+        Bundle args = getArguments();
+        username = args.getString("username");
         //初始化定位与地图
         initLocation();
         binding.mapView.onCreate(savedInstanceState);
@@ -123,10 +137,10 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
     }
 
     private void initSearch() {
-        // 构造 GeocodeSearch 对象
+        //构造 GeocodeSearch 对象
         try {
             geocodeSearch = new GeocodeSearch(requireContext());
-            // 设置监听
+            //设置监听
             geocodeSearch.setOnGeocodeSearchListener(this);
         } catch (AMapException e) {
             e.printStackTrace();
@@ -195,23 +209,6 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
         if (aMapLocation.getErrorCode() == 0) {
             // 定位成功
             showMsg("定位成功");
-//            aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-//            aMapLocation.getLatitude();//获取纬度
-//            aMapLocation.getLongitude();//获取经度
-//            aMapLocation.getAccuracy();//获取精度信息
-//            aMapLocation.getAddress();//详细地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
-//            aMapLocation.getCountry();//国家信息
-//            aMapLocation.getProvince();//省信息
-//            aMapLocation.getCity();//城市信息
-//            aMapLocation.getDistrict();//城区信息
-//            aMapLocation.getStreet();//街道信息
-//            aMapLocation.getStreetNum();//街道门牌号信息
-//            aMapLocation.getCityCode();//城市编码
-//            aMapLocation.getAdCode();//地区编码
-//            aMapLocation.getAoiName();//获取当前定位点的AOI信息
-//            aMapLocation.getBuildingId();//获取当前室内定位的建筑物Id
-//            aMapLocation.getFloor();//获取当前室内定位的楼层
-//            aMapLocation.getGpsAccuracyStatus();//获取GPS的当前状态
             // 停止定位
             stopLocation();
             // 显示地图定位结果
@@ -246,18 +243,50 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
 
     @Override
     public void onMapClick(LatLng latLng) {
-        latLonToAddress(latLng);
+        //查询所有东湖景点
+        Cursor cursor = dbHelper.getDatabase().query("Sight",
+                new String[]{
+                        "id", "latitude", "longitude"
+                },
+                null, null, null, null, null
+        );
+        boolean found = false;
+        float[] result = new float[1];
+        double clickLat = latLng.latitude;
+        double clickLon = latLng.longitude;
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            double lat = cursor.getDouble(cursor.getColumnIndexOrThrow("latitude"));
+            double lon = cursor.getDouble(cursor.getColumnIndexOrThrow("longitude"));
+            //计算两点距离（米）
+            Location.distanceBetween(clickLat, clickLon, lat, lon, result);
+            //500米范围内视作命中
+            if (result[0] <= 500) {
+                found = true;
+                //跳转到景点详情页
+                Intent intent = new Intent(requireContext(), SightInfoActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("sight_id", id);
+                startActivity(intent);
+                break;
+            }
+        }
+        cursor.close();
+        if (!found) {
+            //如果均未命中，提示
+            showMsg("此处不是东湖主要景点");
+        }
     }
 
     //坐标转地址
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int rCode) {
         //解析result获取地址描述信息
-        if(rCode == PARSE_SUCCESS_CODE){
+        if (rCode == PARSE_SUCCESS_CODE) {
             RegeocodeAddress regeocodeAddress = regeocodeResult.getRegeocodeAddress();
             //显示解析后的地址
-            showMsg("地址："+regeocodeAddress.getFormatAddress());
-        }else {
+            showMsg("地址：" + regeocodeAddress.getFormatAddress());
+        } else {
             showMsg("获取地址失败");
         }
     }

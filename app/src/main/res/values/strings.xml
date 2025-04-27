@@ -112,4 +112,22 @@
     <string name="route_spend">距离和时间</string>
     <string name="route_info">详情</string>
     <string name="route_line">出发</string>
+    <string name="sight_info">景点信息</string>
+    <string name="sight_info_comment">用户评论</string>
+    <string name="sight_info_empty">当前景点暂无评论~</string>
+    <string name="sight_info_commentBt">评论</string>
+    <string name="sight_info_bookBt">在线订票</string>
+    <string name="sight_info_navigateBt">景点导航</string>
+    <string name="sight_comment">用户评论</string>
+    <string name="sight_comment_text">评论内容</string>
+    <string name="sight_comment_text_hint">请编写您的评论内容</string>
+    <string name="sight_comment_submitBt">发布</string>
+    <string name="sight_purchase">确认订单</string>
+    <string name="sight_purchase_infoTitle">景点票信息</string>
+    <string name="sight_purchase_numTitle">购买数量</string>
+    <string name="sight_purchase_ticket">景点票</string>
+    <string name="sight_purchase_quantity">1</string>
+    <string name="sight_purchase_price">单价：</string>
+    <string name="sight_purchase_moneyTv">合计：</string>
+    <string name="sight_purchase_payBt">立即付款</string>
 </resources>

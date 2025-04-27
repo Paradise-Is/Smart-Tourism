@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/nav_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!--返回箭头-->
+        <ImageView
+            android:id="@+id/backBt"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:src="@mipmap/back_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="50dp"
+            android:layout_toEndOf="@+id/backBt"
+            android:gravity="center"
+            android:text="@string/sight_comment"
+            android:textColor="@color/light_black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/light_grey"
+        app:layout_constraintHeight_percent="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nav_frame">
+        <!--评论内容-->
+        <RelativeLayout
+            android:id="@+id/textFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/sight_comment_text"
+                android:textColor="@color/light_brown"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textTv"
+                android:layout_marginBottom="10dp">
+
+                <EditText
+                    android:id="@+id/wordEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/edittext_border"
+                    android:gravity="start|top"
+                    android:hint="@string/sight_comment_text_hint"
+                    android:inputType="textMultiLine"
+                    android:maxLength="200"
+                    android:padding="12dp"
+                    android:textColorHint="@color/light_silver" />
+
+                <TextView
+                    android:id="@+id/wordTotalEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/wordEt"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/complain_question_num"
+                    android:textColor="@color/dark_silver"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/wordCountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/wordEt"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@id/wordTotalEt"
+                    android:text="@string/complain_question_sum"
+                    android:textColor="@color/red"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+        <!--发布按钮-->
+        <Button
+            android:id="@+id/submitBt"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@+id/textFrame"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/green"
+            android:text="@string/sight_comment_submitBt"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
