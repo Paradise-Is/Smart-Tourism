@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--设置背景图片-->
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_three"/>
+    <!--账户设置输入框-->
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:ems="16"
+        android:hint="@string/username_in"
+        android:inputType="text"
+        android:singleLine="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
+    <!--密码设置输入框-->
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:ems="16"
+        android:hint="@string/password_in"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
+    <!--设置账户按钮-->
+    <Button
+        android:id="@+id/userSettingBt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/radius_border_purple"
+        android:text="@string/user_setting"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

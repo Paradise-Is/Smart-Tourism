@@ -31,6 +31,10 @@
                 android:icon="@mipmap/nav_password"
                 android:title="@string/nav_password" />
             <item
+                android:id="@+id/nav_setting"
+                android:icon="@mipmap/nav_setting"
+                android:title="@string/nav_setting" />
+            <item
                 android:id="@+id/nav_back"
                 android:icon="@mipmap/nav_back"
                 android:title="@string/nav_back"/>

@@ -18,6 +18,7 @@ import com.example.smarttourism.ui.ComplaintFragment;
 import com.example.smarttourism.ui.DocentFragment;
 import com.example.smarttourism.ui.EmergencyFragment;
 import com.example.smarttourism.ui.PasswordFragment;
+import com.example.smarttourism.ui.SettingFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class AdminMainActivity extends AppCompatActivity {
@@ -85,6 +86,9 @@ public class AdminMainActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_password:
                     selectedFragment = new PasswordFragment();
+                    break;
+                case R.id.nav_setting:
+                    selectedFragment = new SettingFragment();
                     break;
                 case R.id.nav_back:
                     Toast.makeText(AdminMainActivity.this, "已退出管理员系统", Toast.LENGTH_SHORT).show();
