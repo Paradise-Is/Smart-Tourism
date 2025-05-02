@@ -132,4 +132,13 @@
     <string name="sight_purchase_price">单价：</string>
     <string name="sight_purchase_moneyTv">合计：</string>
     <string name="sight_purchase_payBt">立即付款</string>
+    <string name="visitors_day">日</string>
+    <string name="visitors_month">月</string>
+    <string name="visitors_year">年</string>
+    <string name="visitors_title">访客情况</string>
+    <string name="visitors_average">近7日平均访客量：</string>
+    <string name="visitors_total">近7日合计访客量：</string>
+    <string name="complaint_title">投诉情况</string>
+    <string name="complaint_total">总投诉数：</string>
+    <string name="complaint_rate">已处理投诉占比：</string>
 </resources>

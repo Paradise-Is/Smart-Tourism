@@ -2,8 +2,16 @@ package com.example.smarttourism.util;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Pair;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DBHelper extends SQLiteOpenHelper {
     //数据库名
@@ -89,6 +97,13 @@ public class DBHelper extends SQLiteOpenHelper {
             + "price text not null, "
             + "total text not null, "
             + "purchase_date text not null);";
+    //创建访客量表（id，日期年，日期月，日期日，访客量）
+    private static final String CREATE_VisitorStat = "create table if not exists VisitorStat("
+            + "id integer primary key autoincrement,"
+            + "year text not null, "
+            + "month text not null, "
+            + "day text not null, "
+            + "count integer not null);";
     //数据库操作实例
     private static DBHelper instance;
     private SQLiteDatabase database;
@@ -123,6 +138,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_Sight);
         db.execSQL(CREATE_SightComment);
         db.execSQL(CREATE_SightPurchase);
+        db.execSQL(CREATE_VisitorStat);
         //初始化创建一个管理员账号
         db.execSQL("insert into Admin(username,password)values('admin','123456')");
         //初始化景区景点信息
@@ -193,6 +209,196 @@ public class DBHelper extends SQLiteOpenHelper {
         database.close();
     }
 
+    //提供访客量数据
+    public void incrementToday() {
+        database = this.getWritableDatabase();
+        Calendar calendar = Calendar.getInstance();
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        ContentValues v = new ContentValues();
+        v.put("count", "count+1");
+        String where = "year=? and month=? and day=?";
+        String[] args = {year, month, day};
+        int updated = database.update("VisitorStat", v, where, args);
+        if (updated == 0) {
+            ContentValues values = new ContentValues();
+            values.put("year", year);
+            values.put("month", month);
+            values.put("day", day);
+            values.put("count", 1);
+            database.insert("VisitorStat", null, values);
+        }
+    }
+
+    //计算近N天的合计访客量
+    public int sumLastNDays(int N) {
+        database = this.getWritableDatabase();
+        int total = 0;
+        Calendar cal = Calendar.getInstance();
+        for (int i = 0; i < N; i++) {
+            cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_YEAR, -i);
+            String year = String.valueOf(cal.get(Calendar.YEAR));
+            String month = String.valueOf(cal.get(Calendar.MONTH) + 1);
+            String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+            Cursor cursor = database.rawQuery(
+                    "select count from VisitorStat where year=? and month=? and day=?",
+                    new String[]{year, month, day}
+            );
+            if (cursor.moveToFirst()) {
+                //获取当日访客量
+                total += cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return total;
+    }
+
+    //计算近N天的平均访客量
+    public float avgLastNDays(int N) {
+        int sum = sumLastNDays(N);
+        return N > 0 ? (float) sum / N : 0;
+    }
+
+    //获取最近N天，每天的(标签，访客量)
+    public List<Pair<String, Integer>> getLastNDaysCounts(int N) {
+        database = this.getWritableDatabase();
+        List<Pair<String, Integer>> out = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = N - 1; i >= 0; i--) {
+            calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_YEAR, -i);
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+            String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+            Cursor cursor = database.rawQuery(
+                    "select count from VisitorStat where year=? and month=? and day=?",
+                    new String[]{year, month, day}
+            );
+            int cnt = 0;
+            if (cursor.moveToFirst()) cnt = cursor.getInt(0);
+            cursor.close();
+            String label = (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+            out.add(new Pair<>(label, cnt));
+        }
+        return out;
+    }
+
+    //获取最近N月，每月的(标签，访客量)
+    public List<Pair<String, Integer>> getLastNMonthsCounts(int N) {
+        database = this.getWritableDatabase();
+        List<Pair<String, Integer>> out = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = N - 1; i >= 0; i--) {
+            calendar = Calendar.getInstance();
+            calendar.add(Calendar.MONTH, -i);
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+            Cursor cursor = database.rawQuery(
+                    "select SUM(count) from VisitorStat where year=? and month=?",
+                    new String[]{year, month}
+            );
+            int cnt = 0;
+            if (cursor.moveToFirst()) cnt = cursor.getInt(0);
+            cursor.close();
+            String label = year + "-" + (calendar.get(Calendar.MONTH) + 1);
+            out.add(new Pair<>(label, cnt));
+        }
+        return out;
+    }
+
+    //获取最近N年，每年的(标签，访客量)
+    public List<Pair<String, Integer>> getLastNYearsCounts(int N) {
+        database = this.getWritableDatabase();
+        List<Pair<String, Integer>> out = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        for (int i = N - 1; i >= 0; i--) {
+            calendar = Calendar.getInstance();
+            calendar.add(Calendar.YEAR, -i);
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            Cursor cursor = database.rawQuery(
+                    "select SUM(count) from VisitorStat where year=?",
+                    new String[]{year}
+            );
+            int cnt = 0;
+            if (cursor.moveToFirst()) cnt = cursor.getInt(0);
+            cursor.close();
+            out.add(new Pair<>(year, cnt));
+        }
+        return out;
+    }
+
+    //获取固定时间段的景点销售额
+    public Map<Integer, Float> sumSalesByPeriod(String period) {
+        database = this.getWritableDatabase();
+        String where;
+        switch (period) {
+            case "日":
+                where = "date(purchase_date)=date('now')";
+                break;
+            case "周":
+                where = "date(purchase_date)>=date('now','-6 days')";
+                break;
+            case "月":
+                where = "strftime('%Y-%m',purchase_date)=strftime('%Y-%m','now')";
+                break;
+            case "年":
+            default:
+                where = "strftime('%Y',purchase_date)=strftime('%Y','now')";
+        }
+        String sql = "select sight_id, SUM(CAST(total AS REAL)) from SightPurchase "
+                + "where " + where + " group by sight_id";
+        Cursor cursor = database.rawQuery(sql, null);
+        Map<Integer, Float> map = new LinkedHashMap<>();
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            float sum = (float) cursor.getDouble(1);
+            map.put(id, sum);
+        }
+        cursor.close();
+        return map;
+    }
+
+    //根据景点标识查询景点名
+    public String getSightName(int id) {
+        database = this.getWritableDatabase();
+        String name = "";
+        Cursor cursor = database.rawQuery("select name from Sight where id = ?", new String[]{String.valueOf(id)});
+        if (cursor.moveToFirst()) {
+            name = cursor.getString(0);
+        }
+        cursor.close();
+        return name;
+    }
+
+    //统计指定状态的投诉数
+    public int countComplaintsByStatus(String status) {
+        database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(
+                "select COUNT(*) from Complaint where status = ?",
+                new String[]{status}
+        );
+        int cnt = 0;
+        if (cursor.moveToFirst()) {
+            cnt = cursor.getInt(0);
+        }
+        cursor.close();
+        return cnt;
+    }
+
+    //统计所有投诉数
+    public int countAllComplaints() {
+        database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("select COUNT(*) from Complaint", null);
+        int cnt = 0;
+        if (cursor.moveToFirst()) {
+            cnt = cursor.getInt(0);
+        }
+        cursor.close();
+        return cnt;
+    }
+
     //数据库版本更新
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -206,6 +412,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists Sight");
         db.execSQL("drop table if exists SightComment");
         db.execSQL("drop table if exists SightPurchase");
+        db.execSQL("drop table if exists VisitorStat");
         onCreate(db);
     }
 

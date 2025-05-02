@@ -1,6 +1,7 @@
 package com.example.smarttourism.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,14 +14,18 @@ import com.example.smarttourism.ui.GuideFragment;
 import com.example.smarttourism.ui.MineFragment;
 import com.example.smarttourism.ui.SurroundingsFragment;
 import com.example.smarttourism.ui.UserHomeFragment;
+import com.example.smarttourism.util.DBHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import java.util.Calendar;
 
 public class UserMainActivity extends AppCompatActivity {
     //底边栏的选项卡视图
     private BottomNavigationView bottomNavigationView;
     //用户用户名
     private String username;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +33,15 @@ public class UserMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_main);
         //获取用户用户名
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         username = intent.getStringExtra("username");
         //获取组件
         bottomNavigationView = findViewById(R.id.tab_menu_bar);
+        //实现数据库功能
+        dbHelper = new DBHelper(UserMainActivity.this);
+        dbHelper.open();
+        //访客量统计
+        markVisitOncePerDay();
         //默认加载首页
         if (savedInstanceState == null) {
             //创建片段实例
@@ -52,6 +62,23 @@ public class UserMainActivity extends AppCompatActivity {
 
         //实现选项卡监听
         bottomNavigationView.setOnItemSelectedListener(new TabItemSelectedListener());
+    }
+
+    //标记该用户本人是否访问登录
+    private void markVisitOncePerDay() {
+        Calendar calendar = Calendar.getInstance();
+        String today = calendar.get(Calendar.YEAR) + "-"
+                + (calendar.get(Calendar.MONTH) + 1) + "-"
+                + calendar.get(Calendar.DAY_OF_MONTH);
+        String prefKey = "visit_" + username + "_" + today;
+        SharedPreferences sp = getSharedPreferences("visitor_stats", MODE_PRIVATE);
+        boolean counted = sp.getBoolean(prefKey, false);
+        if (!counted) {
+            // 第一次，+1
+            dbHelper.incrementToday();
+            // 标记已统计
+            sp.edit().putBoolean(prefKey, true).apply();
+        }
     }
 
     private class TabItemSelectedListener implements NavigationBarView.OnItemSelectedListener {

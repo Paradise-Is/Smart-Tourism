@@ -1,5 +1,7 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -65,6 +67,11 @@ dependencies {
     implementation("androidx.fragment:fragment:1.3.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("com.google.android.material:material:1.10.0")
+    //Firebase Analytics SDK
+    implementation("com.google.firebase:firebase-analytics:17.4.1")
+    //MPAndroidChart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

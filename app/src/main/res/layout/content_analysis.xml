@@ -2,11 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     android:orientation="vertical">
-    <TextView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/analysisTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/analysisPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/nav_analysis"
-        android:textSize="25sp" />
+        android:layout_below="@+id/analysisTab"/>
 </RelativeLayout>
