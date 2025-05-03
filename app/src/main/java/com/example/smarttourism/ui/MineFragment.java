@@ -27,8 +27,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.example.smarttourism.R;
 import com.example.smarttourism.activity.LoginActivity;
 import com.example.smarttourism.activity.MineComplainActivity;
+import com.example.smarttourism.activity.MineGuideActivity;
 import com.example.smarttourism.activity.MineInfoActivity;
 import com.example.smarttourism.activity.MinePasswordActivity;
+import com.example.smarttourism.activity.MinePurchaseActivity;
 import com.example.smarttourism.util.DBHelper;
 
 import java.io.File;
@@ -48,6 +50,8 @@ public class MineFragment extends Fragment implements AMapLocationListener {
     private ImageView headshot;
     private TextView tvNickname;
     private TextView tvEmail;
+    private LinearLayout guideBt;
+    private LinearLayout purchaseBt;
     private LinearLayout complainBt;
     private LinearLayout alarmBt;
     private LinearLayout passwordBt;
@@ -63,6 +67,8 @@ public class MineFragment extends Fragment implements AMapLocationListener {
         headshot = (ImageView) view.findViewById(R.id.headshot);
         tvNickname = (TextView) view.findViewById(R.id.tv_nickname);
         tvEmail = (TextView) view.findViewById(R.id.tv_email);
+        guideBt = (LinearLayout) view.findViewById(R.id.guideBt);
+        purchaseBt = (LinearLayout) view.findViewById(R.id.purchaseBt);
         complainBt = (LinearLayout) view.findViewById(R.id.complainBt);
         alarmBt = (LinearLayout) view.findViewById(R.id.alarmBt);
         passwordBt = (LinearLayout) view.findViewById(R.id.passwordBt);
@@ -79,6 +85,8 @@ public class MineFragment extends Fragment implements AMapLocationListener {
         RefreshUserInfo();
         //实现按钮点击响应
         infoBt.setOnClickListener(new InfoBtListener());
+        guideBt.setOnClickListener(new GuideBtListener());
+        purchaseBt.setOnClickListener(new PurchaseBtListener());
         complainBt.setOnClickListener(new ComplainBtListener());
         alarmBt.setOnClickListener(new AlarmBtListener());
         passwordBt.setOnClickListener(new PasswordBtListener());
@@ -178,6 +186,24 @@ public class MineFragment extends Fragment implements AMapLocationListener {
         }
     }
 
+    private class GuideBtListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), MineGuideActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
+    }
+
+    private class PurchaseBtListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), MinePurchaseActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
+    }
+
     private class ComplainBtListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -201,8 +227,8 @@ public class MineFragment extends Fragment implements AMapLocationListener {
                     String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
                     values.put("alarm_date", currentDate);
                     //将当前位置写入数据库中
-                    values.put("alarm_latitude",currLat);
-                    values.put("alarm_longitude",currLon);
+                    values.put("alarm_latitude", currLat);
+                    values.put("alarm_longitude", currLon);
                     long result = dbHelper.getDatabase().insert("Alarm", null, values);
                     if (result != -1) {
                         Toast.makeText(getActivity(), "一键报警成功", Toast.LENGTH_SHORT).show();

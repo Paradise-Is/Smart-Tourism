@@ -43,6 +43,8 @@
     <string name="nav_setting">账号设置</string>
     <string name="nav_back">退出系统</string>
     <string name="user_setting">账号设置</string>
+    <string name="mine_guide">我的攻略</string>
+    <string name="mine_purchase">我的购票</string>
     <string name="mine_complain">景区投诉</string>
     <string name="mine_alarm">一键报警</string>
     <string name="mine_logout">账号注销</string>
@@ -57,7 +59,8 @@
     <string name="info_birthday">生日</string>
     <string name="info_phone">电话</string>
     <string name="info_email">邮箱</string>
-    <string name="complain_title">景区投诉</string>
+    <string name="mine_guide_empty">您还未发布任何攻略~</string>
+    <string name="mine_purchase_empty">暂无购票信息~</string>
     <string name="complain_type_title">投诉类型</string>
     <string name="complain_type_hint">请选择投诉问题类型</string>
     <string name="complain_question_title">问题描述</string>
@@ -69,10 +72,14 @@
     <string name="complain_submit">提交</string>
     <string name="guide_info">攻略详情</string>
     <string name="guide_add">攻略发布</string>
+    <string name="guide_edit">攻略修改</string>
     <string name="add_title">填写标题</string>
     <string name="add_num">30</string>
     <string name="add_content">添加正文</string>
     <string name="add_publish">发布</string>
+    <string name="edit_title">修改标题</string>
+    <string name="edit_content">修改内容</string>
+    <string name="edit_edit">修改</string>
     <string name="complaint_username">投诉用户：</string>
     <string name="complaint_type">投诉类型：</string>
     <string name="complaint_content">投诉内容：</string>
@@ -130,6 +137,9 @@
     <string name="sight_purchase_ticket">景点票</string>
     <string name="sight_purchase_quantity">1</string>
     <string name="sight_purchase_price">单价：</string>
+    <string name="sight_purchase_date">购买日期：</string>
+    <string name="sight_purchase_total">总价：</string>
+    <string name="sight_purchase_num">数量：</string>
     <string name="sight_purchase_moneyTv">合计：</string>
     <string name="sight_purchase_payBt">立即付款</string>
     <string name="visitors_day">日</string>

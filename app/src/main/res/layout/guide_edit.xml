@@ -28,13 +28,28 @@
             android:id="@+id/info_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="50dp"
+            android:layout_toStartOf="@+id/deleteRl"
             android:layout_toEndOf="@+id/backBt"
             android:gravity="center"
-            android:text="@string/guide_add"
+            android:text="@string/guide_edit"
             android:textColor="@color/light_black"
             android:textSize="20sp"
             android:textStyle="bold" />
+        <!--删除按钮-->
+        <RelativeLayout
+            android:id="@+id/deleteRl"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/deleteBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/docent_delete" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -58,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/add_title"
+                android:text="@string/edit_title"
                 android:textColor="@color/light_brown"
                 android:textSize="18sp" />
 
@@ -75,7 +90,7 @@
                 android:textColorHint="@color/light_silver" />
 
             <TextView
-                android:id="@+id/wordTotalEt"
+                android:id="@+id/wordTotalTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/titleEt"
@@ -99,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/add_content"
+                android:text="@string/edit_content"
                 android:textColor="@color/light_brown"
                 android:textSize="18sp" />
 
@@ -116,13 +131,13 @@
         </RelativeLayout>
         <!--提交按钮-->
         <Button
-            android:id="@+id/publishBt"
+            android:id="@+id/editBt"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@+id/content_frame"
             android:layout_marginTop="32dp"
             android:backgroundTint="@color/green"
-            android:text="@string/add_publish"
+            android:text="@string/edit_edit"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp" />

@@ -89,11 +89,72 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.6"
         app:layout_constraintStart_toStartOf="parent">
+        <!--我的攻略按钮-->
+        <LinearLayout
+            android:id="@+id/guideBt"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@mipmap/mine_guide" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/mine_guide"
+                android:textColor="@color/brown"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <View
+            android:id="@+id/div_line1"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/guideBt"
+            android:background="@color/grey" />
+        <!--我的购票按钮-->
+        <LinearLayout
+            android:id="@+id/purchaseBt"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@+id/div_line1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@mipmap/mine_purchase" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/mine_purchase"
+                android:textColor="@color/brown"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <View
+            android:id="@+id/div_line2"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/purchaseBt"
+            android:background="@color/grey" />
+
         <!--景区投诉按钮-->
         <LinearLayout
             android:id="@+id/complainBt"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_below="@+id/div_line2"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -114,7 +175,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/div_line1"
+            android:id="@+id/div_line3"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_below="@+id/complainBt"
@@ -124,7 +185,7 @@
             android:id="@+id/alarmBt"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_below="@+id/div_line1"
+            android:layout_below="@+id/div_line3"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -145,7 +206,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/div_line2"
+            android:id="@+id/div_line4"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_below="@+id/alarmBt"
@@ -155,7 +216,7 @@
             android:id="@+id/passwordBt"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_below="@+id/div_line2"
+            android:layout_below="@+id/div_line4"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -176,7 +237,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/div_line3"
+            android:id="@+id/div_line5"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_below="@+id/passwordBt"
@@ -186,7 +247,7 @@
             android:id="@+id/logoutBt"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_below="@+id/div_line3"
+            android:layout_below="@+id/div_line5"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -207,7 +268,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/div_line4"
+            android:id="@+id/div_line6"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_below="@+id/logoutBt"
@@ -217,7 +278,7 @@
             android:id="@+id/backSysBt"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_below="@+id/div_line4"
+            android:layout_below="@+id/div_line6"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="16dp"
@@ -238,7 +299,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/div_line5"
+            android:id="@+id/div_line7"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:layout_below="@+id/backSysBt"

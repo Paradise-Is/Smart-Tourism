@@ -1,5 +1,6 @@
 package com.example.smarttourism.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -358,6 +359,22 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return map;
+    }
+
+    //获取所有景点 id→name 的映射
+    public Map<Integer, String> getAllSightNames() {
+        Map<Integer, String> ret = new LinkedHashMap<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query("Sight", new String[]{"id", "name"}, null, null, null, null, "id ASC");
+        while (c.moveToNext()) {
+            @SuppressLint("Range")
+            int id = c.getInt(c.getColumnIndex("id"));
+            @SuppressLint("Range")
+            String name = c.getString(c.getColumnIndex("name"));
+            ret.put(id, name);
+        }
+        c.close();
+        return ret;
     }
 
     //根据景点标识查询景点名

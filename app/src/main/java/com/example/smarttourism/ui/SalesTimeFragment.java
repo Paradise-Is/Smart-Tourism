@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -64,22 +65,45 @@ public class SalesTimeFragment extends Fragment {
     private void loadDataFor(String period) {
         //调用 DBHelper里的方法，根据 period 查找数据
         Map<Integer, Float> map = dbHelper.sumSalesByPeriod(period);
+        //获取所有景点映射
+        Map<Integer, String> allSights = dbHelper.getAllSightNames();
         //构造饼图
         List<PieEntry> entries = new ArrayList<>();
         List<SaleItem> items = new ArrayList<>();
-        for (Map.Entry<Integer, Float> e : map.entrySet()) {
-            int sightId = e.getKey();
-            float amt = e.getValue();
-            String name = dbHelper.getSightName(sightId);
-            entries.add(new PieEntry(amt, name));
+        for (Map.Entry<Integer, String> sight : allSights.entrySet()) {
+            int sightId = sight.getKey();
+            String name = sight.getValue();
+            float amt = map.getOrDefault(sightId, 0f);
+            // 只展示大于 0 的扇区
+            if (amt > 0f) {
+                entries.add(new PieEntry(amt, name));
+            }
             items.add(new SaleItem(name, String.format(Locale.getDefault(), "%.2f", amt)));
         }
-        PieDataSet set = new PieDataSet(entries, period + " 景点销售额分布");
-        set.setColors(ColorTemplate.MATERIAL_COLORS);
-        set.setValueTextSize(12f);
-        salesPieChart.setData(new PieData(set));
-        salesPieChart.getDescription().setEnabled(false);
-        salesPieChart.animateY(600);
+        if (entries.isEmpty()) {
+            salesPieChart.clear();
+            salesPieChart.setNoDataText("当前周期暂无销售数据");
+        } else {
+            PieDataSet set = new PieDataSet(entries, "景点销售额分布");
+            // 丰富配色
+            List<Integer> colors = new ArrayList<>();
+            for (int c : ColorTemplate.MATERIAL_COLORS) colors.add(c);
+            for (int c : ColorTemplate.VORDIPLOM_COLORS) colors.add(c);
+            for (int c : ColorTemplate.COLORFUL_COLORS) colors.add(c);
+            for (int c : ColorTemplate.JOYFUL_COLORS) colors.add(c);
+            for (int c : ColorTemplate.PASTEL_COLORS) colors.add(c);
+            set.setColors(colors);
+            set.setValueTextSize(12f);
+            salesPieChart.setUsePercentValues(true);
+            PieData data = new PieData(set);
+            data.setValueFormatter(new PercentFormatter(salesPieChart));
+            data.setValueTextSize(12f);
+            salesPieChart.clear();
+            salesPieChart.setData(data);
+            salesPieChart.getDescription().setEnabled(false);
+            salesPieChart.animateY(600);
+            salesPieChart.invalidate();
+        }
         //装配 RecyclerView 列表
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
         listView.setAdapter(new SaleItemAdapter(requireContext(), items));
