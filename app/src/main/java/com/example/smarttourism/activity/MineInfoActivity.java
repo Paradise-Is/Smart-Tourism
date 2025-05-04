@@ -179,10 +179,9 @@ public class MineInfoActivity extends Activity {
                 //将图片解码成Bitmap对象
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 if (bitmap != null) {
-                    //调整图片尺寸
-                    Bitmap scaledBitmap = BitmapUtils.zoom(bitmap, headshot.getWidth(), headshot.getHeight());
-                    //对图片进行圆形裁剪
-                    Bitmap circularBitmap = BitmapUtils.circleBitmap(scaledBitmap);
+                    int size = Math.min(headshot.getWidth(), headshot.getHeight());
+                    //用控件的最小边长作为目标尺寸
+                    Bitmap circularBitmap = BitmapUtils.circleBitmap(bitmap, size);
                     //显示处理后的图片
                     headshot.setImageBitmap(circularBitmap);
                     //bitmap图片保存到本地
@@ -200,8 +199,8 @@ public class MineInfoActivity extends Activity {
             //获取拍照后生成
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             //对图片进行处理
-            BitmapUtils.zoom(bitmap, headshot.getWidth(), headshot.getHeight());
-            bitmap = BitmapUtils.circleBitmap(bitmap);
+            int size = Math.min(headshot.getWidth(), headshot.getHeight());
+            bitmap = BitmapUtils.circleBitmap(bitmap, size);
             //显示处理后的图片
             headshot.setImageBitmap(bitmap);
             //bitmap图片保存到本地

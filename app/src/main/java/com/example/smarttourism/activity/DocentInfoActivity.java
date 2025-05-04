@@ -159,7 +159,8 @@ public class DocentInfoActivity extends Activity {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 if (bitmap != null) {
                     //调整图片尺寸
-                    Bitmap scaledBitmap = BitmapUtils.zoom(bitmap, photo.getWidth(), photo.getHeight());
+                    int size = Math.min(photo.getWidth(), photo.getHeight());
+                    Bitmap scaledBitmap = BitmapUtils.zoomBitmap(bitmap, size);
                     //显示处理后的图片
                     photo.setImageBitmap(scaledBitmap);
                     //bitmap图片保存到本地
@@ -177,7 +178,8 @@ public class DocentInfoActivity extends Activity {
             //获取拍照后生成
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             //对图片进行处理
-            BitmapUtils.zoom(bitmap, photo.getWidth(), photo.getHeight());
+            int size = Math.min(photo.getWidth(), photo.getHeight());
+            BitmapUtils.zoomBitmap(bitmap, size);
             //显示处理后的图片
             photo.setImageBitmap(bitmap);
             //bitmap图片保存到本地
