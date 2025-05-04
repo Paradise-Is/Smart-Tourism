@@ -82,7 +82,7 @@ public class MineGuideActivity extends Activity {
         //获取列表数据
         GuideAdapter adapter = new GuideAdapter(MineGuideActivity.this, R.layout.guide_item, data);
         guideList.setAdapter(adapter);
-        // 控制提示文本显示与否
+        //控制提示文本显示与否
         if (data.isEmpty()) {
             emptyText.setVisibility(View.VISIBLE);
             guideList.setVisibility(View.GONE);

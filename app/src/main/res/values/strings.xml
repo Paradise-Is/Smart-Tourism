@@ -73,6 +73,8 @@
     <string name="guide_info">攻略详情</string>
     <string name="guide_add">攻略发布</string>
     <string name="guide_edit">攻略修改</string>
+    <string name="guide_search_hint">请输入查找内容</string>
+    <string name="guide_empty">未找到相关攻略</string>
     <string name="add_title">填写标题</string>
     <string name="add_num">30</string>
     <string name="add_content">添加正文</string>

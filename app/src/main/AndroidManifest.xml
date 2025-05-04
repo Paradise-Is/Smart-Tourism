@@ -99,7 +99,8 @@
         <activity
             android:name=".activity.UserMainActivity"
             android:exported="true"
-            android:theme="@style/Theme.SmartTourism">
+            android:theme="@style/Theme.SmartTourism"
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

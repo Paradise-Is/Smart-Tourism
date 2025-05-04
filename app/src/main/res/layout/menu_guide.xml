@@ -9,31 +9,82 @@
         android:id="@+id/top_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
         android:background="@color/white"
-        app:layout_constraintHeight_percent="0.05"
+        android:orientation="horizontal"
+        app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/addBt"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:background="@android:color/transparent"
-            android:elevation="10dp"
-            android:src="@mipmap/guide_add" />
+            android:layout_margin="10dp"
+            android:background="@drawable/radius_more_border_grey"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/searchBt"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/guide_search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/addBt"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/guide_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/searchEt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/guide_search_hint"
+                android:imeOptions="actionSearch"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/light_silver"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/addBt"
+                app:layout_constraintStart_toEndOf="@id/searchBt"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/guideList"
+    <RelativeLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:drawSelectorOnTop="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.95"
+        android:background="@color/light_grey"
+        app:layout_constraintHeight_percent="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_frame" />
+        app:layout_constraintTop_toBottomOf="@+id/top_frame">
+
+        <ListView
+            android:id="@+id/guideList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawSelectorOnTop="false" />
+
+        <TextView
+            android:id="@+id/emptyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/guide_empty"
+            android:textColor="@color/light_brown"
+            android:textSize="18sp"
+            android:visibility="gone" />
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
