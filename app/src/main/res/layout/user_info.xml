@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/back_three"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/back_three">
+
     <RelativeLayout
         android:id="@+id/nav_frame"
         android:layout_width="match_parent"
@@ -27,8 +28,8 @@
             android:id="@+id/info_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="50dp"
-            android:layout_toRightOf="@+id/backBt"
+            android:layout_marginEnd="50dp"
+            android:layout_toEndOf="@+id/backBt"
             android:gravity="center"
             android:text="@string/user_info"
             android:textColor="@color/light_black"
@@ -83,7 +84,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/info_nickname"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
@@ -95,7 +96,7 @@
                 android:id="@+id/nicknameInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +107,7 @@
                 android:id="@+id/arrow1"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +117,7 @@
         <View
             android:id="@+id/div1"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/nickname_bar"
             android:background="@color/grey" />
         <!--性别栏-->
@@ -130,7 +131,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/info_gender"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
@@ -142,7 +143,7 @@
                 android:id="@+id/genderInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -153,7 +154,7 @@
                 android:id="@+id/arrow2"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -163,7 +164,7 @@
         <View
             android:id="@+id/div2"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/gender_bar"
             android:background="@color/grey" />
         <!--简介栏-->
@@ -177,7 +178,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/info_introduction"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
@@ -189,12 +190,12 @@
                 android:id="@+id/introductionInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:maxEms="10"
+                android:maxLines="1"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
-                android:maxLines="1"
-                android:maxEms="10"
-                android:ellipsize="end"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/arrow3"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -203,7 +204,7 @@
                 android:id="@+id/arrow3"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -213,7 +214,7 @@
         <View
             android:id="@+id/div3"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/introduction_bar"
             android:background="@color/grey" />
         <!--生日栏-->
@@ -227,7 +228,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_margin="10dp"
                 android:text="@string/info_birthday"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
@@ -239,7 +240,7 @@
                 android:id="@+id/birthdayInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -250,7 +251,7 @@
                 android:id="@+id/arrow4"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -260,7 +261,7 @@
         <View
             android:id="@+id/div4"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/birthday_bar"
             android:background="@color/grey" />
         <!--电话栏-->
@@ -274,7 +275,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/info_phone"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
@@ -286,7 +287,7 @@
                 android:id="@+id/phoneInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -297,7 +298,7 @@
                 android:id="@+id/arrow5"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -307,7 +308,7 @@
         <View
             android:id="@+id/div5"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/phone_bar"
             android:background="@color/grey" />
         <!--邮箱栏-->
@@ -321,7 +322,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/info_email"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
@@ -333,7 +334,7 @@
                 android:id="@+id/emailInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/light_black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -344,7 +345,7 @@
                 android:id="@+id/arrow6"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -354,7 +355,7 @@
         <View
             android:id="@+id/div6"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/email_bar"
             android:background="@color/grey" />
     </RelativeLayout>

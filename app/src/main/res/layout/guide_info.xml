@@ -28,8 +28,8 @@
             android:id="@+id/info_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="50dp"
-            android:layout_toRightOf="@+id/backBt"
+            android:layout_marginEnd="50dp"
+            android:layout_toEndOf="@+id/backBt"
             android:gravity="center"
             android:text="@string/guide_info"
             android:textColor="@color/light_black"
@@ -52,7 +52,7 @@
             android:id="@+id/userInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp">
+            android:layout_marginStart="20dp">
             <!--发布者用户头像-->
             <ImageView
                 android:id="@+id/userHeadshot"
@@ -64,8 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/userHeadshot"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/userHeadshot"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -76,9 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/userInfo"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -88,9 +88,9 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="14sp" />
@@ -110,14 +110,14 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp">
             <!--攻略内容-->
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
         </ScrollView>

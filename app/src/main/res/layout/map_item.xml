@@ -7,7 +7,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2px"
+        android:layout_height="2dp"
         android:background="@color/grey" />
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="20dp"
-        android:layout_toRightOf="@+id/map_img">
+        android:layout_toEndOf="@+id/map_img">
 
         <TextView
             android:id="@+id/map_title"
@@ -44,5 +44,4 @@
             android:textColor="@color/light_black"
             android:textSize="18sp" />
     </RelativeLayout>
-
 </RelativeLayout>

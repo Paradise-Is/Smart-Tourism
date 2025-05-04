@@ -25,8 +25,8 @@
             android:id="@+id/info_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/deleteRl"
-            android:layout_toRightOf="@+id/backBt"
+            android:layout_toStartOf="@+id/deleteRl"
+            android:layout_toEndOf="@+id/backBt"
             android:gravity="center"
             android:text="@string/docent_info"
             android:textColor="@color/light_black"
@@ -37,14 +37,15 @@
             android:id="@+id/deleteRl"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentEnd="true">
+
             <ImageView
                 android:id="@+id/deleteBt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/docent_delete"  />
+                android:layout_centerVertical="true"
+                android:src="@mipmap/docent_delete" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -127,7 +128,7 @@
                 android:id="@+id/arrow1"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -137,7 +138,7 @@
         <View
             android:id="@+id/div1"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/name_bar"
             android:background="@color/grey" />
         <!--性别栏-->
@@ -174,7 +175,7 @@
                 android:id="@+id/arrow2"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -184,7 +185,7 @@
         <View
             android:id="@+id/div2"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/gender_bar"
             android:background="@color/grey" />
         <!--年龄栏-->
@@ -224,7 +225,7 @@
                 android:id="@+id/arrow3"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -234,7 +235,7 @@
         <View
             android:id="@+id/div3"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/age_bar"
             android:background="@color/grey" />
         <!--联系方式栏-->
@@ -271,7 +272,7 @@
                 android:id="@+id/arrow4"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:gravity="center|right"
+                android:gravity="center|end"
                 android:src="@mipmap/mine_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -281,7 +282,7 @@
         <View
             android:id="@+id/div4"
             android:layout_width="match_parent"
-            android:layout_height="2px"
+            android:layout_height="2dp"
             android:layout_below="@+id/phone_bar"
             android:background="@color/grey" />
     </RelativeLayout>

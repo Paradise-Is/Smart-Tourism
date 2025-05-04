@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_grey"
     android:orientation="vertical">
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/analysisTab"
         android:layout_width="match_parent"
@@ -13,5 +14,5 @@
         android:id="@+id/analysisPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/analysisTab"/>
+        android:layout_below="@+id/analysisTab" />
 </RelativeLayout>

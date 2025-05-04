@@ -14,5 +14,5 @@
         android:id="@+id/pager_complaint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tab_complaint"/>
+        android:layout_below="@+id/tab_complaint" />
 </RelativeLayout>

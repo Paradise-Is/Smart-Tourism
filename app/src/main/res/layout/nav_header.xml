@@ -10,21 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center">
+
         <ImageView
             android:id="@+id/nav_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/app_picture"/>
+            android:src="@mipmap/app_picture" />
+
         <TextView
             android:id="@+id/nav_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/nav_icon"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/nav_icon"
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textStyle="italic"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:textStyle="italic" />
     </RelativeLayout>
 </RelativeLayout>
