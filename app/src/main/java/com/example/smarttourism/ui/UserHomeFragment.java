@@ -260,8 +260,8 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
             double lon = cursor.getDouble(cursor.getColumnIndexOrThrow("longitude"));
             //计算两点距离（米）
             Location.distanceBetween(clickLat, clickLon, lat, lon, result);
-            //500米范围内视作命中
-            if (result[0] <= 500) {
+            //100米范围内视作命中
+            if (result[0] <= 100) {
                 found = true;
                 //跳转到景点详情页
                 Intent intent = new Intent(requireContext(), SightInfoActivity.class);

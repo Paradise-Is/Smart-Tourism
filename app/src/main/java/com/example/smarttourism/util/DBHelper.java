@@ -22,10 +22,10 @@ public class DBHelper extends SQLiteOpenHelper {
     //创建用户信息表（用户名，密码，电子邮箱，头像，昵称，性别，电话，个人简介，生日）
     private static final String CREATE_User = "create table if not exists User("
             + "username text primary key,"
-            + "password text,"
-            + "email text,"
+            + "password text not null,"
+            + "email text not null,"
             + "headshot text,"
-            + "nickname text,"
+            + "nickname text not null,"
             + "gender text,"
             + "phone text,"
             + "introduction text,"
@@ -33,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //创建管理员信息表（用户名，密码）
     private static final String CREATE_Admin = "create table if not exists Admin("
             + "username text primary key,"
-            + "password text)";
+            + "password text not null)";
     //创建投诉记录表（id，投诉者用户名，投诉类型，投诉内容，投诉日期，投诉者联系方式，投诉状态）
     private static final String CREATE_Complaint = "create table if not exists Complaint("
             + "id integer primary key autoincrement, "
@@ -77,11 +77,11 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_Sight = "create table if not exists Sight("
             + "id integer primary key autoincrement, "
             + "name text not null, "
-            + "description text, "
-            + "price text, "
-            + "latitude text, "
-            + "longitude text, "
-            + "image text);";
+            + "description text not null, "
+            + "price text not null, "
+            + "latitude text not null, "
+            + "longitude text not null, "
+            + "image text not null);";
     //创建东湖景区景点评价表（id，评论者用户名，景点标识，评论内容，评论日期）
     private static final String CREATE_SightComment = "create table if not exists SightComment("
             + "comment_id integer primary key autoincrement, "
