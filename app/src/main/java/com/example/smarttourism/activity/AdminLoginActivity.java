@@ -37,7 +37,7 @@ public class AdminLoginActivity extends Activity {
         backBt=(TextView)this.findViewById(R.id.backBt);
         adminLoginBt=(Button)this.findViewById(R.id.adminLoginBt);
         //实现数据库功能
-        dbHelper = DBHelper.getInstance(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //实现密码显示与隐藏
         ifPwdShow=findViewById(R.id.hide_or_display);

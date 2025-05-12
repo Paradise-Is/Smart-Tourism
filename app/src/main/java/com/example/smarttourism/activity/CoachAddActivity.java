@@ -33,7 +33,7 @@ public class CoachAddActivity extends Activity {
         licenseEt = (EditText) this.findViewById(R.id.licenseEt);
         capacityEt = (EditText) this.findViewById(R.id.capacityEt);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //实现点击按钮响应
         backBt.setOnClickListener(new BackBtListener());

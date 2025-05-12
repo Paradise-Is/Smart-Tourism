@@ -37,7 +37,7 @@ public class MinePasswordActivity extends Activity {
         renewPasswordText = (EditText) this.findViewById(R.id.renew_password);
         editPasswordBt = (Button) this.findViewById(R.id.editPasswordBt);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //获取用户用户名
         Intent intent = getIntent();

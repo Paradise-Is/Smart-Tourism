@@ -38,7 +38,7 @@ public class UserMainActivity extends AppCompatActivity {
         //获取组件
         bottomNavigationView = findViewById(R.id.tab_menu_bar);
         //实现数据库功能
-        dbHelper = new DBHelper(UserMainActivity.this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //访客量统计
         markVisitOncePerDay();

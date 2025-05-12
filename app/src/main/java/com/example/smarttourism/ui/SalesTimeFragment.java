@@ -51,7 +51,7 @@ public class SalesTimeFragment extends Fragment {
         //获取数据范围
         period = requireArguments().getString(ARG_PERIOD);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         return view;
     }

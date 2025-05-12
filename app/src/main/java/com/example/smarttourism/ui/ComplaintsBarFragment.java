@@ -37,7 +37,7 @@ public class ComplaintsBarFragment extends Fragment {
         totalTv = view.findViewById(R.id.totalTv);
         rateTv = view.findViewById(R.id.rateTv);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //构建页面数据
         setupBarChart();

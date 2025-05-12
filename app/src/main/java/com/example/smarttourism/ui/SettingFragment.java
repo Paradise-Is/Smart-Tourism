@@ -38,7 +38,7 @@ public class SettingFragment extends Fragment {
         passwordText = (EditText) view.findViewById(R.id.password);
         userSettingBt = (Button) view.findViewById(R.id.userSettingBt);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //获取从Activity传来的数据
         Bundle args = getArguments();

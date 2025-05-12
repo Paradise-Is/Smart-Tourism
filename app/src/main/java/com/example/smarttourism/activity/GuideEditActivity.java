@@ -45,7 +45,7 @@ public class GuideEditActivity extends Activity {
         contentText = (EditText) this.findViewById(R.id.contentEt);
         editBt = (Button) this.findViewById(R.id.editBt);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //获取用户用户名
         Intent intent = getIntent();

@@ -75,7 +75,7 @@ public class MineFragment extends Fragment implements AMapLocationListener {
         logoutBt = (LinearLayout) view.findViewById(R.id.logoutBt);
         backSysBt = (LinearLayout) view.findViewById(R.id.backSysBt);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         // 初始化高德定位
         initLocationClient();

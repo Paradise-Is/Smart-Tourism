@@ -43,7 +43,7 @@ public class GuideInfoActivity extends Activity {
         dateText = (TextView) this.findViewById(R.id.date);
         contentText = (TextView) this.findViewById(R.id.content);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //获取用户用户名和id
         Intent intent = getIntent();

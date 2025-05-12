@@ -64,7 +64,7 @@ public class DocentAddActivity extends Activity {
         ageEt = (EditText) this.findViewById(R.id.ageEt);
         phoneEt = (EditText) this.findViewById(R.id.phoneEt);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //下拉框的选项数据
         String[] genderTypes = {"男", "女"};

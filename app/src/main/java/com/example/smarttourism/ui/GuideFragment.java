@@ -50,7 +50,7 @@ public class GuideFragment extends Fragment {
         emptyText = (TextView) view.findViewById(R.id.emptyText);
         guideList = (ListView) view.findViewById(R.id.guideList);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //获取从Activity传来的数据
         Bundle args = getArguments();

@@ -43,7 +43,7 @@ public class LoginActivity extends Activity {
         registerBt = (TextView) this.findViewById(R.id.registerBt);
         forgetBt = (TextView) this.findViewById(R.id.forgetBt);
         //实现数据库功能
-        dbHelper = DBHelper.getInstance(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //实现密码显示与隐藏
         ifPwdShow = findViewById(R.id.hide_or_display);

@@ -86,7 +86,7 @@ public class MineInfoActivity extends Activity {
         emailBar = (ConstraintLayout) this.findViewById(R.id.email_bar);
         emailInfo = (TextView) this.findViewById(R.id.emailInfo);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //获取用户用户名
         Intent intent = getIntent();

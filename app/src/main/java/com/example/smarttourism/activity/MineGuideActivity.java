@@ -39,7 +39,7 @@ public class MineGuideActivity extends Activity {
         guideList = (ListView) this.findViewById(R.id.guideList);
         emptyText = (TextView)findViewById(R.id.emptyText);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //获取用户用户名
         Intent intent = getIntent();

@@ -31,7 +31,7 @@ public class EmergencyFragment extends Fragment {
         //获取组件
         alarmList = (ListView) view.findViewById(R.id.alarmList);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //获取从Activity传来的数据
         Bundle args = getArguments();

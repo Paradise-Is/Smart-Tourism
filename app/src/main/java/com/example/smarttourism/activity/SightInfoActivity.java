@@ -63,7 +63,7 @@ public class SightInfoActivity extends Activity {
         username = intent.getStringExtra("username");
         sight_id = intent.getIntExtra("sight_id", 1);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //获取景点信息
         String selection = "id=?";

@@ -79,7 +79,7 @@ public class DocentInfoActivity extends Activity {
         phoneBar = (ConstraintLayout) this.findViewById(R.id.phone_bar);
         phoneInfo = (TextView) this.findViewById(R.id.phoneInfo);
         //实现数据库功能
-        dbHelper = new DBHelper(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //获取用户用户名
         Intent intent = getIntent();

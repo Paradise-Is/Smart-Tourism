@@ -4,14 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Pair;
+
+import org.spatialite.database.SQLiteDatabase;
+import org.spatialite.database.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -73,7 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + "gps_latitude text, "
             + "gps_longitude text, "
             + "status text not null);";
-    //创建东湖景区景点信息表（id，景点名，景点描述，景点票价，景点纬度，景点经度，景点照片）
+    //创建东湖景区景点信息属性表（id，景点名，景点描述，景点票价，景点纬度，景点经度，景点照片）
     private static final String CREATE_Sight = "create table if not exists Sight("
             + "id integer primary key autoincrement, "
             + "name text not null, "
@@ -82,6 +84,10 @@ public class DBHelper extends SQLiteOpenHelper {
             + "latitude text not null, "
             + "longitude text not null, "
             + "image text not null);";
+    //创建东湖景区景点信息空间表（id，景点名）
+    private static final String CREATE_SightPoI = "create table if not exists SightPoI("
+            + "id integer primary key,"
+            + "name text not null);";
     //创建东湖景区景点评价表（id，评论者用户名，景点标识，评论内容，评论日期）
     private static final String CREATE_SightComment = "create table if not exists SightComment("
             + "comment_id integer primary key autoincrement, "
@@ -131,19 +137,51 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_User);
         db.execSQL(CREATE_Admin);
+        //初始化创建一个管理员账号
+        db.execSQL("insert into Admin(username,password)values('admin','123456')");
         db.execSQL(CREATE_Complaint);
         db.execSQL(CREATE_Alarm);
         db.execSQL(CREATE_Guide);
         db.execSQL(CREATE_Docent);
         db.execSQL(CREATE_Coach);
         db.execSQL(CREATE_Sight);
+        //初始化景区景点信息
+        insertSightsInfo(db);
+        db.execSQL(CREATE_SightPoI);
         db.execSQL(CREATE_SightComment);
         db.execSQL(CREATE_SightPurchase);
         db.execSQL(CREATE_VisitorStat);
-        //初始化创建一个管理员账号
-        db.execSQL("insert into Admin(username,password)values('admin','123456')");
-        //初始化景区景点信息
-        insertSightsInfo(db);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        //初始化空间元数据
+        db.rawQuery("SELECT InitSpatialMetadata(1)", null).close();
+        //物理增加geom列
+        try {
+            db.execSQL("ALTER TABLE SightPoI ADD COLUMN geom BLOB;");
+        } catch (android.database.sqlite.SQLiteException e) {
+        }
+        //给geom列建列
+        db.rawQuery("SELECT AddGeometryColumn('SightPoI','geom',4326,'POINT','XY')", null).close();
+        //把属性表里的坐标写进空间表
+        Cursor cursor = db.rawQuery("select id, name, latitude, longitude from Sight", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            double lat = Double.parseDouble(cursor.getString(2));
+            double lon = Double.parseDouble(cursor.getString(3));
+            ContentValues values = new ContentValues();
+            values.put("id", id);
+            values.put("name", name);
+            db.insert("SightPoI", null, values);
+            String wkt = String.format(Locale.US, "POINT(%f %f)", lon, lat);
+            db.execSQL("update SightPoI set geom = GeomFromText(?,4326) where id=?", new Object[]{wkt, id});
+        }
+        cursor.close();
+        //为geom列建空间索引
+        db.rawQuery("SELECT CreateSpatialIndex('SightPoI','geom')", null).close();
     }
 
     //更新指定用户邮箱
@@ -208,6 +246,32 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("birthday", newBirthday);
         database.update("User", values, "username = ?", new String[]{username});
         database.close();
+    }
+
+    //根据点击点周边的范围，用空间表做“点选”检索
+    public List<Pair<Integer, String>> queryPOIsNearby(double lng, double lat, double radius) {
+        //将经纬度和半径转成“包围盒”：
+        double delta = radius / 111000.0;
+        double minX = lng - delta, maxX = lng + delta;
+        double minY = lat - delta, maxY = lat + delta;
+        //构建包围多边形的 WKT
+        String boxWkt = String.format(
+                Locale.US,
+                "POLYGON((%f %f, %f %f, %f %f, %f %f, %f %f))",
+                minX, minY,
+                minX, maxY,
+                maxX, maxY,
+                maxX, minY,
+                minX, minY
+        );
+        String sql = "select id, name from SightPoI where Intersects(GeomFromText(?, 4326), geom) = 1";
+        Cursor c = database.rawQuery(sql, new String[]{boxWkt});
+        List<Pair<Integer, String>> out = new ArrayList<>();
+        while (c.moveToNext()) {
+            out.add(new Pair<>(c.getInt(0), c.getString(1)));
+        }
+        c.close();
+        return out;
     }
 
     //提供访客量数据
@@ -427,6 +491,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists Docent");
         db.execSQL("drop table if exists Coach");
         db.execSQL("drop table if exists Sight");
+        db.execSQL("drop table if exists SightPoI");
         db.execSQL("drop table if exists SightComment");
         db.execSQL("drop table if exists SightPurchase");
         db.execSQL("drop table if exists VisitorStat");

@@ -1,11 +1,11 @@
 package com.example.smarttourism.ui;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.location.Location;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +40,8 @@ import com.example.smarttourism.R;
 import com.example.smarttourism.activity.SightInfoActivity;
 import com.example.smarttourism.databinding.MenuHomeBinding;
 import com.example.smarttourism.util.DBHelper;
+
+import java.util.List;
 
 public class UserHomeFragment extends Fragment implements AMapLocationListener, LocationSource, AMap.OnMapClickListener, GeocodeSearch.OnGeocodeSearchListener {
     //解析成功标识码
@@ -83,7 +85,7 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
             return insets;
         });
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //获取从Activity传来的数据
         Bundle args = getArguments();
@@ -243,38 +245,35 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
 
     @Override
     public void onMapClick(LatLng latLng) {
-        //查询所有东湖景点
-        Cursor cursor = dbHelper.getDatabase().query("Sight",
-                new String[]{
-                        "id", "latitude", "longitude"
-                },
-                null, null, null, null, null
-        );
-        boolean found = false;
-        float[] result = new float[1];
-        double clickLat = latLng.latitude;
         double clickLon = latLng.longitude;
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            double lat = cursor.getDouble(cursor.getColumnIndexOrThrow("latitude"));
-            double lon = cursor.getDouble(cursor.getColumnIndexOrThrow("longitude"));
-            //计算两点距离（米）
-            Location.distanceBetween(clickLat, clickLon, lat, lon, result);
-            //100米范围内视作命中
-            if (result[0] <= 100) {
-                found = true;
-                //跳转到景点详情页
-                Intent intent = new Intent(requireContext(), SightInfoActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("sight_id", id);
-                startActivity(intent);
-                break;
+        double clickLat = latLng.latitude;
+        //调用空间查询，半径100米内有哪些 POI
+        List<Pair<Integer, String>> nearby = dbHelper.queryPOIsNearby(clickLon, clickLat, 500);
+        if (nearby.isEmpty()) {
+            // 没有找到任何景点
+            Toast.makeText(requireContext(), "此处不是东湖主要景点", Toast.LENGTH_SHORT).show();
+        } else if (nearby.size() == 1) {
+            //刚好一个景点，直接跳转
+            int sightId = nearby.get(0).first;
+            Intent intent = new Intent(requireContext(), SightInfoActivity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("sight_id", sightId);
+            startActivity(intent);
+        } else {
+            //超过一个景点，弹窗允许用户选择
+            String[] names = new String[nearby.size()];
+            for (int i = 0; i < nearby.size(); i++) {
+                names[i] = nearby.get(i).second;
             }
-        }
-        cursor.close();
-        if (!found) {
-            //如果均未命中，提示
-            showMsg("此处不是东湖主要景点");
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("请选择景点")
+                    .setItems(names, (dialog, which) -> {
+                        int sightId = nearby.get(which).first;
+                        Intent intent = new Intent(requireContext(), SightInfoActivity.class);
+                        intent.putExtra("username", username);
+                        intent.putExtra("sight_id", sightId);
+                        startActivity(intent);
+                    }).show();
         }
     }
 

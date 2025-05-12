@@ -39,7 +39,7 @@ public class DocentFragment extends Fragment {
         addBt = (ImageView) view.findViewById(R.id.addBt);
         docentList = (ListView) view.findViewById(R.id.docentList);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //获取从Activity传来的数据
         Bundle args = getArguments();

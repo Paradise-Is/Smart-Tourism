@@ -31,7 +31,7 @@ public class ForgetActivity extends Activity {
         emailText = (EditText) this.findViewById(R.id.email);
         forgetBt = (Button) this.findViewById(R.id.forgetBt);
         //实现数据库功能
-        dbHelper = DBHelper.getInstance(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //返回按钮响应
         backBt.setOnClickListener(new BackBtLister());

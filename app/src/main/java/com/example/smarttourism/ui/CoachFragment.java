@@ -36,7 +36,7 @@ public class CoachFragment extends Fragment {
         addBt = (ImageView) view.findViewById(R.id.addBt);
         coachList = (ListView) view.findViewById(R.id.coachList);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //获取从Activity传来的数据
         Bundle args = getArguments();

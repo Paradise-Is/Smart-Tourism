@@ -52,7 +52,7 @@ public class ComplaintStatusFragment extends Fragment {
         //获取处理状态
         status = getArguments().getString(EXTRA_CONTENT);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         RefreshComplaintList();
         //实现按钮点击响应

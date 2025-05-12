@@ -36,7 +36,7 @@ public class PasswordFragment extends Fragment {
         renewPasswordText = (EditText) view.findViewById(R.id.renew_password);
         editPasswordBt = (Button) view.findViewById(R.id.editPasswordBt);
         //实现数据库功能
-        dbHelper = new DBHelper(getActivity());
+        dbHelper = DBHelper.getInstance(requireContext().getApplicationContext());
         dbHelper.open();
         //获取从Activity传来的数据
         Bundle args = getArguments();

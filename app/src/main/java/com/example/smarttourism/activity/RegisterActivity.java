@@ -46,7 +46,7 @@ public class RegisterActivity extends Activity {
         rePasswordText = (EditText) this.findViewById(R.id.re_password);
         registerBt = (Button) this.findViewById(R.id.registerBt);
         //实现数据库功能
-        dbHelper = DBHelper.getInstance(this);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
         dbHelper.open();
         //实现密码显示与隐藏
         ifPwdShow1 = findViewById(R.id.hide_or_display_a);
