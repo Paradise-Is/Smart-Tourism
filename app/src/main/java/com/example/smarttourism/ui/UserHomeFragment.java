@@ -1,11 +1,9 @@
 package com.example.smarttourism.ui;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +35,11 @@ import com.amap.api.services.geocoder.RegeocodeAddress;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.example.smarttourism.R;
-import com.example.smarttourism.activity.SightInfoActivity;
+import com.example.smarttourism.activity.EastLakeActivity;
 import com.example.smarttourism.databinding.MenuHomeBinding;
 import com.example.smarttourism.util.DBHelper;
 
-import java.util.List;
-
-public class UserHomeFragment extends Fragment implements AMapLocationListener, LocationSource, AMap.OnMapClickListener, GeocodeSearch.OnGeocodeSearchListener {
+public class UserHomeFragment extends Fragment implements AMapLocationListener, LocationSource, GeocodeSearch.OnGeocodeSearchListener {
     //解析成功标识码
     private static final int PARSE_SUCCESS_CODE = 1000;
     //声明AMapLocationClient类对象
@@ -95,6 +91,8 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
         binding.mapView.onCreate(savedInstanceState);
         initMap();
         initSearch();
+        //按钮响应
+        binding.eastLake.setOnClickListener(new EastLakeListener());
     }
 
     //初始化位置信息
@@ -133,8 +131,6 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
             UiSettings uiSettings = aMap.getUiSettings();
             //隐藏缩放按钮
             uiSettings.setZoomControlsEnabled(false);
-            //设置地图点击事件
-            aMap.setOnMapClickListener(this);
         }
     }
 
@@ -243,40 +239,6 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
         mLocationClient = null;
     }
 
-    @Override
-    public void onMapClick(LatLng latLng) {
-        double clickLon = latLng.longitude;
-        double clickLat = latLng.latitude;
-        //调用空间查询，半径100米内有哪些 POI
-        List<Pair<Integer, String>> nearby = dbHelper.queryPOIsNearby(clickLon, clickLat, 500);
-        if (nearby.isEmpty()) {
-            // 没有找到任何景点
-            Toast.makeText(requireContext(), "此处不是东湖主要景点", Toast.LENGTH_SHORT).show();
-        } else if (nearby.size() == 1) {
-            //刚好一个景点，直接跳转
-            int sightId = nearby.get(0).first;
-            Intent intent = new Intent(requireContext(), SightInfoActivity.class);
-            intent.putExtra("username", username);
-            intent.putExtra("sight_id", sightId);
-            startActivity(intent);
-        } else {
-            //超过一个景点，弹窗允许用户选择
-            String[] names = new String[nearby.size()];
-            for (int i = 0; i < nearby.size(); i++) {
-                names[i] = nearby.get(i).second;
-            }
-            new AlertDialog.Builder(requireContext())
-                    .setTitle("请选择景点")
-                    .setItems(names, (dialog, which) -> {
-                        int sightId = nearby.get(which).first;
-                        Intent intent = new Intent(requireContext(), SightInfoActivity.class);
-                        intent.putExtra("username", username);
-                        intent.putExtra("sight_id", sightId);
-                        startActivity(intent);
-                    }).show();
-        }
-    }
-
     //坐标转地址
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int rCode) {
@@ -304,5 +266,14 @@ public class UserHomeFragment extends Fragment implements AMapLocationListener, 
         RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 20, GeocodeSearch.AMAP);
         //异步获取地址信息
         geocodeSearch.getFromLocationAsyn(query);
+    }
+
+    private class EastLakeListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), EastLakeActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }
     }
 }
