@@ -72,6 +72,8 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics:17.4.1")
     //MPAndroidChart
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    //spatialite
+    implementation("com.github.sevar83:android-spatialite:2.0.1")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
