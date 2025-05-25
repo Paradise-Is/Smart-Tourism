@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,12 +18,14 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.example.smarttourism.R;
 import com.example.smarttourism.util.DBHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class EastLakeActivity extends Activity implements AMap.OnMapClickListener {
     String username;
     private MapView mapView;
+    private FloatingActionButton backBt;
     private AMap aMap;
     private DBHelper dbHelper;
 
@@ -32,6 +35,7 @@ public class EastLakeActivity extends Activity implements AMap.OnMapClickListene
         setContentView(R.layout.east_lake);
         //获取组件
         mapView = (MapView) findViewById(R.id.mapView);
+        backBt = (FloatingActionButton) findViewById(R.id.backBt);
         mapView.onCreate(savedInstanceState);
         //实现数据库功能
         dbHelper = DBHelper.getInstance(getApplicationContext());
@@ -39,6 +43,8 @@ public class EastLakeActivity extends Activity implements AMap.OnMapClickListene
         //获取用户用户名
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
+        //按钮响应
+        backBt.setOnClickListener(new BackBtLister());
         //获取 AMap 对象
         if (aMap == null) {
             aMap = mapView.getMap();
@@ -125,5 +131,13 @@ public class EastLakeActivity extends Activity implements AMap.OnMapClickListene
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    private class BackBtLister implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            //直接关闭当前页面
+            finish();
+        }
     }
 }

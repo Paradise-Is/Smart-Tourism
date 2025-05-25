@@ -190,7 +190,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("email", newEmail);
         database.update("User", values, "username = ?", new String[]{username});
-        database.close();
     }
 
     //更新指定用户头像并将图片路径保存到数据库中
@@ -200,7 +199,6 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("headshot", headshotPath);
         // 更新User表中 username 对应的记录
         database.update("User", values, "username = ?", new String[]{username});
-        database.close();
     }
 
     //更新指定用户昵称
@@ -209,7 +207,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("nickname", newNickname);
         database.update("User", values, "username = ?", new String[]{username});
-        database.close();
     }
 
     //更新指定用户性别
@@ -218,7 +215,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("gender", newGender);
         database.update("User", values, "username = ?", new String[]{username});
-        database.close();
     }
 
     //更新指定用户电话
@@ -227,7 +223,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("phone", newPhone);
         database.update("User", values, "username = ?", new String[]{username});
-        database.close();
     }
 
     //更新指定用户简介
@@ -236,7 +231,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("introduction", newIntroduction);
         database.update("User", values, "username = ?", new String[]{username});
-        database.close();
     }
 
     //更新指定用户生日
@@ -245,7 +239,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("birthday", newBirthday);
         database.update("User", values, "username = ?", new String[]{username});
-        database.close();
     }
 
     //根据点击点周边的范围，用空间表做“点选”检索
@@ -265,12 +258,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 minX, minY
         );
         String sql = "select id, name from SightPoI where Intersects(GeomFromText(?, 4326), geom) = 1";
-        Cursor c = database.rawQuery(sql, new String[]{boxWkt});
+        Cursor cursor = database.rawQuery(sql, new String[]{boxWkt});
         List<Pair<Integer, String>> out = new ArrayList<>();
-        while (c.moveToNext()) {
-            out.add(new Pair<>(c.getInt(0), c.getString(1)));
+        while (cursor.moveToNext()) {
+            out.add(new Pair<>(cursor.getInt(0), cursor.getString(1)));
         }
-        c.close();
+        cursor.close();
         return out;
     }
 

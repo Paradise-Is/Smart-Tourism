@@ -59,7 +59,6 @@ public class UserMainActivity extends AppCompatActivity {
             //设置初始选项卡为选中首页状态
             bottomNavigationView.setSelectedItemId(R.id.tab_home);
         }
-
         //实现选项卡监听
         bottomNavigationView.setOnItemSelectedListener(new TabItemSelectedListener());
     }
@@ -74,9 +73,9 @@ public class UserMainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("visitor_stats", MODE_PRIVATE);
         boolean counted = sp.getBoolean(prefKey, false);
         if (!counted) {
-            // 第一次，+1
+            //第一次，+1
             dbHelper.incrementToday();
-            // 标记已统计
+            //标记已统计
             sp.edit().putBoolean(prefKey, true).apply();
         }
     }

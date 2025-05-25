@@ -4,6 +4,19 @@
     android:id="@+id/tab_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!--浮动按钮，跳转回主页-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_black_back"
+        app:hoveredFocusedTranslationZ="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:pressedTranslationZ="18dp" />
 
     <com.amap.api.maps.MapView
         android:id="@+id/mapView"

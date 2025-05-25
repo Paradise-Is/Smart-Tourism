@@ -45,7 +45,7 @@ public class ForgetActivity extends Activity {
             //实现监听按钮，点击跳转
             Intent intent = new Intent();
             //前面为目前页面，后面为要跳转的下一个页面
-            intent.setClass(ForgetActivity.this, AdminLoginActivity.class);
+            intent.setClass(ForgetActivity.this, LoginActivity.class);
             startActivity(intent);
         }
     }
