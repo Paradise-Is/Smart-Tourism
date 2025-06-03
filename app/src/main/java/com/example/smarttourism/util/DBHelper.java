@@ -275,11 +275,19 @@ public class DBHelper extends SQLiteOpenHelper {
         String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
         String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
         ContentValues v = new ContentValues();
-        v.put("count", "count+1");
-        String where = "year=? and month=? and day=?";
-        String[] args = {year, month, day};
-        int updated = database.update("VisitorStat", v, where, args);
-        if (updated == 0) {
+        //先查询当天是否已有记录
+        Cursor cursor = database.rawQuery(
+                "SELECT count FROM VisitorStat WHERE year=? AND month=? AND day=?",
+                new String[]{ year, month, day }
+        );
+        if (cursor.moveToFirst()) {
+            //已经有记录，则用原生SQL自增count
+            database.execSQL(
+                    "UPDATE VisitorStat SET count = count + 1 WHERE year=? AND month=? AND day=?",
+                    new String[]{ year, month, day }
+            );
+        } else {
+            //没有记录，则插入一条 count=1
             ContentValues values = new ContentValues();
             values.put("year", year);
             values.put("month", month);
@@ -287,6 +295,7 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put("count", 1);
             database.insert("VisitorStat", null, values);
         }
+        cursor.close();
     }
 
     //计算近N天的合计访客量

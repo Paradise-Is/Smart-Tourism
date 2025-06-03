@@ -16,7 +16,7 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="95932dd0-84d8-42e8-a74f-fbcef1e15602">
+    <connection id="e9738406-37b0-4401-9701-44c6824b4160">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
@@ -27,10 +27,10 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="95932dd0-84d8-42e8-a74f-fbcef1e15602" />
+    <connection id="e9738406-37b0-4401-9701-44c6824b4160" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="95932dd0-84d8-42e8-a74f-fbcef1e15602" dataset="main.SightPoI" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e9738406-37b0-4401-9701-44c6824b4160" dataset="main.VisitorStat" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -49,7 +49,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="95932dd0-84d8-42e8-a74f-fbcef1e15602" active="true" signed="true">
+      <connection id="e9738406-37b0-4401-9701-44c6824b4160" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -66,7 +66,7 @@
           <tns-folder value="" />
           <tns-profile value="" />
           <files>
-            <file path="D:\Android\SmartTourism.db" schema="main" />
+            <file path="D:\SmartTourism.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
